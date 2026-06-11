@@ -48,7 +48,7 @@ export const Route = createFileRoute("/receitas/$slug")({
 });
 
 function RecipePage() {
-  const { recipe: r } = Route.useLoaderData();
+  const { recipe: r } = Route.useLoaderData() as { recipe: import("@/lib/recipes").Recipe };
   return (
     <div className="min-h-screen bg-background">
       <SiteHeader />
