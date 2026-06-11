@@ -95,12 +95,12 @@ function RecipePage() {
               <span>Dificuldade: <span className="font-bold text-primary">{r.difficulty}</span></span>
             </div>
             <div className="mt-6 grid grid-cols-2 gap-3 md:grid-cols-4">
-              {[
+              {([
                 [Users, "Porções", r.servings],
                 [Clock, "Preparo", r.prep],
                 [ChefHat, "Cocção", r.cook],
                 [Flame, "Calorias", r.calories],
-              ].map(([Icon, label, val]: any) => (
+              ] as const).map(([Icon, label, val]) => (
                 <div key={label} className="rounded-lg border border-border bg-background p-4 text-center">
                   <Icon className="mx-auto h-5 w-5 text-primary" />
                   <p className="mt-2 text-[10px] font-bold uppercase tracking-widest text-muted-foreground">{label}</p>
