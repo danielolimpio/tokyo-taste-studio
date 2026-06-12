@@ -8,15 +8,16 @@ import { recipes } from "@/lib/recipes";
 export const Route = createFileRoute("/receitas")({
   head: () => ({
     meta: [
-      { title: "Receitas Japonesas | Sushi, Ramen, Temaki, Yakisoba e Mais" },
-      { name: "description", content: "Catálogo completo de receitas de comida japonesa: como fazer sushi em casa, ramen tonkotsu, temaki de salmão, yakisoba, tempura crocante, hot roll, gyoza, mochi e molho teriyaki." },
-      { name: "keywords", content: "receitas japonesas, receitas de comida japonesa, como fazer sushi em casa, receita de ramen, receita de temaki, receita de yakisoba, receita de tempura, hot roll caseiro, gyoza receita, mochi receita, molho teriyaki" },
-      { property: "og:title", content: "Receitas Japonesas | Catálogo de Culinária Japonesa" },
-      { property: "og:description", content: "Mais de 9 receitas de culinária japonesa passo a passo: sushi, ramen, temaki, yakisoba, tempura e mais." },
+      { title: "Receitas Japonesas | Sushi, Ramen, Temaki e Yakisoba" },
+      { name: "description", content: "Catálogo de receitas de comida japonesa: sushi, ramen tonkotsu, temaki, yakisoba, tempura, hot roll, gyoza, mochi e molho teriyaki." },
+      { name: "keywords", content: "receitas japonesas, comida japonesa, como fazer sushi, receita de ramen, temaki, yakisoba, tempura, hot roll, gyoza, mochi, molho teriyaki" },
+      { property: "og:title", content: "Receitas Japonesas | Culinária Japonesa" },
+      { property: "og:description", content: "Mais de 9 receitas de culinária japonesa passo a passo." },
       { property: "og:url", content: "/receitas" },
     ],
     links: [{ rel: "canonical", href: "/receitas" }],
   }),
+
 
   component: RecipesPage,
 });

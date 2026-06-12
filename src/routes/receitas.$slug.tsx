@@ -14,8 +14,9 @@ export const Route = createFileRoute("/receitas/$slug")({
   head: ({ loaderData, params }) => {
     const r = loaderData?.recipe;
     if (!r) return { meta: [{ title: "Receita não encontrada" }] };
-    const title = `${r.title} | Receita de Comida Japonesa Passo a Passo`;
-    const description = `${r.excerpt} Aprenda essa receita autêntica de culinária japonesa (${r.category.toLowerCase()}) em ${r.prep} de preparo.`;
+    const title = `${r.title} | Receita Japonesa`;
+    const description = `${r.excerpt}`.slice(0, 158);
+
     return {
       meta: [
         { title },
