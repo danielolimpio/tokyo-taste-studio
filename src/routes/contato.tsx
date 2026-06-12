@@ -39,21 +39,25 @@ function ContactPage() {
       />
 
       {/* Info cards */}
-      <section className="mx-auto mt-12 grid max-w-6xl gap-6 px-4 md:grid-cols-3">
-        {[
-          { Icon: MapPin, title: "Endereço Físico", lines: ["Rua Liberdade, 123", "Bairro Liberdade, São Paulo"] },
-          { Icon: Send, title: "E-mail", lines: ["contato@comidasjaponesas.com", "imprensa@comidasjaponesas.com"] },
-          { Icon: Phone, title: "Telefones", lines: ["(11) 4002-8922", "(11) 4002-8923"] },
-        ].map(({ Icon, title, lines }) => (
-          <div key={title} className="rounded-2xl bg-card p-8 text-center shadow-md">
-            <Icon className="mx-auto h-10 w-10 text-primary" />
-            <h3 className="mt-4 text-base font-extrabold text-ink">{title}</h3>
-            {lines.map((l) => (
-              <p key={l} className="mt-1 text-sm text-muted-foreground">{l}</p>
-            ))}
-          </div>
-        ))}
+      <section className="mx-auto mt-12 max-w-6xl px-4">
+        <h2 className="sr-only">Informações de contato</h2>
+        <div className="grid gap-6 md:grid-cols-3">
+          {[
+            { Icon: MapPin, title: "Endereço Físico", lines: ["Rua Liberdade, 123", "Bairro Liberdade, São Paulo"] },
+            { Icon: Send, title: "E-mail", lines: ["contato@comidasjaponesas.com", "imprensa@comidasjaponesas.com"] },
+            { Icon: Phone, title: "Telefones", lines: ["(11) 4002-8922", "(11) 4002-8923"] },
+          ].map(({ Icon, title, lines }) => (
+            <div key={title} className="rounded-2xl bg-card p-8 text-center shadow-md">
+              <Icon className="mx-auto h-10 w-10 text-primary" />
+              <h3 className="mt-4 text-base font-extrabold text-ink">{title}</h3>
+              {lines.map((l) => (
+                <p key={l} className="mt-1 text-sm text-muted-foreground">{l}</p>
+              ))}
+            </div>
+          ))}
+        </div>
       </section>
+
 
       {/* FAQ + form */}
       <section className="mx-auto grid max-w-6xl gap-12 px-4 py-20 md:grid-cols-2">
