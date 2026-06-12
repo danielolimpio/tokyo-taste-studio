@@ -12,12 +12,16 @@ import chef from "@/assets/chef-hero.jpg";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "ComidasJaponesas — Receitas autênticas da culinária japonesa" },
-      { name: "description", content: "Sushi, ramen, tempura, mochi e dezenas de receitas tradicionais japonesas explicadas passo a passo." },
-      { property: "og:title", content: "ComidasJaponesas" },
-      { property: "og:description", content: "Receitas autênticas da culinária japonesa." },
+      { title: "Comidas Japonesas | Receitas de Culinária Japonesa Passo a Passo" },
+      { name: "description", content: "Aprenda a fazer comidas japonesas em casa: receitas de sushi, ramen, temaki, hot roll, yakisoba, tempura, gyoza, mochi e molho teriyaki — culinária japonesa fácil e autêntica." },
+      { name: "keywords", content: "comidas japonesas, receitas japonesas, culinária japonesa, como fazer sushi em casa, receita de ramen, receita de temaki, hot roll, yakisoba receita, tempura, gyoza, mochi, molho teriyaki, arroz japonês, sashimi, comida oriental, gastronomia japonesa" },
+      { property: "og:title", content: "Comidas Japonesas | Receitas Autênticas de Culinária Japonesa" },
+      { property: "og:description", content: "Sushi, ramen, temaki, yakisoba e dezenas de receitas de comida japonesa passo a passo." },
+      { property: "og:url", content: "/" },
     ],
+    links: [{ rel: "canonical", href: "/" }],
   }),
+
   component: Home,
 });
 
