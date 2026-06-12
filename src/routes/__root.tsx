@@ -77,18 +77,13 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Comidas Japonesas | Receitas de Culinária Japonesa Fáceis" },
-      { name: "description", content: "Blog de comidas japonesas com receitas fáceis de culinária japonesa: como fazer sushi em casa, ramen, temaki, tempura, yakisoba, hot roll, missoshiru e molho teriyaki passo a passo." },
-      { name: "keywords", content: "comidas japonesas, culinária japonesa, receitas japonesas, comida japonesa, como fazer sushi, receita de ramen, receita de temaki, receita de yakisoba, receita de tempura, hot roll receita, molho teriyaki, arroz japonês, comida oriental" },
       { name: "author", content: "ComidasJaponesas" },
-      { property: "og:title", content: "Comidas Japonesas | Receitas de Culinária Japonesa" },
-      { property: "og:description", content: "Receitas autênticas de comida japonesa: sushi, sashimi, ramen, temaki, yakisoba e muito mais — passo a passo para fazer em casa." },
       { property: "og:type", content: "website" },
       { property: "og:site_name", content: "ComidasJaponesas" },
       { property: "og:locale", content: "pt_BR" },
       { name: "twitter:card", content: "summary_large_image" },
-
     ],
+
     links: [
       { rel: "stylesheet", href: appCss },
       { rel: "preconnect", href: "https://fonts.googleapis.com" },
