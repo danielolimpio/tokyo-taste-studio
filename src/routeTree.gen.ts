@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as SobreRouteImport } from './routes/sobre'
+import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as ReceitasRouteImport } from './routes/receitas'
 import { Route as ContatoRouteImport } from './routes/contato'
 import { Route as IndexRouteImport } from './routes/index'
@@ -18,6 +19,11 @@ import { Route as ReceitasSlugRouteImport } from './routes/receitas.$slug'
 const SobreRoute = SobreRouteImport.update({
   id: '/sobre',
   path: '/sobre',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
+  id: '/sitemap.xml',
+  path: '/sitemap.xml',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ReceitasRoute = ReceitasRouteImport.update({
@@ -45,6 +51,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/contato': typeof ContatoRoute
   '/receitas': typeof ReceitasRouteWithChildren
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/sobre': typeof SobreRoute
   '/receitas/$slug': typeof ReceitasSlugRoute
 }
@@ -52,6 +59,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/contato': typeof ContatoRoute
   '/receitas': typeof ReceitasRouteWithChildren
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/sobre': typeof SobreRoute
   '/receitas/$slug': typeof ReceitasSlugRoute
 }
@@ -60,21 +68,42 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/contato': typeof ContatoRoute
   '/receitas': typeof ReceitasRouteWithChildren
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/sobre': typeof SobreRoute
   '/receitas/$slug': typeof ReceitasSlugRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/contato' | '/receitas' | '/sobre' | '/receitas/$slug'
+  fullPaths:
+    | '/'
+    | '/contato'
+    | '/receitas'
+    | '/sitemap.xml'
+    | '/sobre'
+    | '/receitas/$slug'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/contato' | '/receitas' | '/sobre' | '/receitas/$slug'
-  id: '__root__' | '/' | '/contato' | '/receitas' | '/sobre' | '/receitas/$slug'
+  to:
+    | '/'
+    | '/contato'
+    | '/receitas'
+    | '/sitemap.xml'
+    | '/sobre'
+    | '/receitas/$slug'
+  id:
+    | '__root__'
+    | '/'
+    | '/contato'
+    | '/receitas'
+    | '/sitemap.xml'
+    | '/sobre'
+    | '/receitas/$slug'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   ContatoRoute: typeof ContatoRoute
   ReceitasRoute: typeof ReceitasRouteWithChildren
+  SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   SobreRoute: typeof SobreRoute
 }
 
@@ -85,6 +114,13 @@ declare module '@tanstack/react-router' {
       path: '/sobre'
       fullPath: '/sobre'
       preLoaderRoute: typeof SobreRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/sitemap.xml': {
+      id: '/sitemap.xml'
+      path: '/sitemap.xml'
+      fullPath: '/sitemap.xml'
+      preLoaderRoute: typeof SitemapDotxmlRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/receitas': {
@@ -134,6 +170,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   ContatoRoute: ContatoRoute,
   ReceitasRoute: ReceitasRouteWithChildren,
+  SitemapDotxmlRoute: SitemapDotxmlRoute,
   SobreRoute: SobreRoute,
 }
 export const routeTree = rootRouteImport
