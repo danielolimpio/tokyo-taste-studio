@@ -7,7 +7,11 @@ import { recipes } from "@/lib/recipes";
 import { Clock, User, Apple, Beef, Cookie, Soup } from "lucide-react";
 import hero from "@/assets/hero-pancakes.jpg";
 import appPromo from "@/assets/app-promo.jpg";
-import chef from "@/assets/chef-hero.jpg";
+import chefAkira from "@/assets/chef-akira.jpg";
+import chefMei from "@/assets/chef-mei.jpg";
+import chefYuki from "@/assets/chef-yuki.jpg";
+import chefHaruka from "@/assets/chef-haruka.jpg";
+import chefRen from "@/assets/chef-ren.jpg";
 
 export const Route = createFileRoute("/")({
   head: () => ({
