@@ -5,6 +5,12 @@ import { PageBanner } from "@/components/PageBanner";
 import { MapPin, Send, Phone, ChevronDown } from "lucide-react";
 import { useState } from "react";
 
+const FAQ = [
+  { q: "Posso enviar uma receita de família?", a: "Sim! Adoramos receber receitas tradicionais. Use o formulário ao lado contando a história do prato e enviaremos uma resposta em até 5 dias." },
+  { q: "Vocês oferecem aulas presenciais?", a: "Oferecemos aulas semanais para grupos de até 8 pessoas no nosso espaço no Bairro Liberdade, em São Paulo." },
+  { q: "É possível adaptar receitas para dietas especiais?", a: "Muitas das nossas receitas podem ser adaptadas. Escreva para a gente contando suas restrições e indicaremos a melhor versão." },
+];
+
 export const Route = createFileRoute("/contato")({
   head: () => ({
     meta: [
@@ -13,20 +19,47 @@ export const Route = createFileRoute("/contato")({
       { name: "keywords", content: "contato comidas japonesas, aulas de culinária japonesa, aula de sushi" },
       { property: "og:title", content: "Contato | Comidas Japonesas" },
       { property: "og:description", content: "Fale com a equipe do blog de culinária japonesa." },
-
       { property: "og:url", content: "/contato" },
     ],
     links: [{ rel: "canonical", href: "/contato" }],
+    scripts: [
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@graph": [
+            {
+              "@type": "FAQPage",
+              mainEntity: FAQ.map((f) => ({
+                "@type": "Question",
+                name: f.q,
+                acceptedAnswer: { "@type": "Answer", text: f.a },
+              })),
+            },
+            {
+              "@type": "LocalBusiness",
+              name: "ComidasJaponesas",
+              image: "/favicon.ico",
+              email: "contato@comidasjaponesas.com",
+              telephone: "+55-11-4002-8922",
+              priceRange: "$$",
+              address: {
+                "@type": "PostalAddress",
+                streetAddress: "Rua Liberdade, 123",
+                addressLocality: "São Paulo",
+                addressRegion: "SP",
+                addressCountry: "BR",
+              },
+            },
+          ],
+        }),
+      },
+    ],
   }),
-
   component: ContactPage,
 });
 
-const FAQ = [
-  { q: "Posso enviar uma receita de família?", a: "Sim! Adoramos receber receitas tradicionais. Use o formulário ao lado contando a história do prato e enviaremos uma resposta em até 5 dias." },
-  { q: "Vocês oferecem aulas presenciais?", a: "Oferecemos aulas semanais para grupos de até 8 pessoas no nosso espaço no Bairro Liberdade, em São Paulo." },
-  { q: "É possível adaptar receitas para dietas especiais?", a: "Muitas das nossas receitas podem ser adaptadas. Escreva para a gente contando suas restrições e indicaremos a melhor versão." },
-];
+
 
 function ContactPage() {
   return (
