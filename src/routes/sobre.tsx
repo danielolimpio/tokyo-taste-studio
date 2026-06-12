@@ -5,6 +5,11 @@ import { PageBanner } from "@/components/PageBanner";
 import { PageBannerSketches } from "@/components/SketchMotifs";
 import { Play } from "lucide-react";
 import chef from "@/assets/chef-hero.jpg";
+import chefAkira from "@/assets/chef-akira.jpg";
+import chefMei from "@/assets/chef-mei.jpg";
+import chefYuki from "@/assets/chef-yuki.jpg";
+import chefHaruka from "@/assets/chef-haruka.jpg";
+import chefRen from "@/assets/chef-ren.jpg";
 import video from "@/assets/video-poster.jpg";
 import grandma from "@/assets/grandma-recipes.jpg";
 
