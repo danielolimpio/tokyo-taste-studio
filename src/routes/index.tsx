@@ -166,15 +166,17 @@ function Home() {
             Três gerações de cozinha japonesa em uma só mesa — tradição, técnica e o respeito ao
             ingrediente que move tudo.
           </p>
-          <div className="mt-12 grid gap-10 md:grid-cols-3">
+          <div className="mt-12 grid gap-10 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5">
             {[
-              { name: "Akira Tanaka", role: "Itamae Sênior" },
-              { name: "Mei Sato", role: "Chef Pâtissière" },
-              { name: "Yuki Nakamura", role: "Sous Chef" },
+              { name: "Akira Tanaka", role: "Itamae Sênior", img: chefAkira },
+              { name: "Mei Sato", role: "Chef Pâtissière", img: chefMei },
+              { name: "Yuki Nakamura", role: "Sous Chef", img: chefYuki },
+              { name: "Haruka Inoue", role: "Chef de Sushi", img: chefHaruka },
+              { name: "Ren Kobayashi", role: "Mestre Ramen", img: chefRen },
             ].map((c) => (
               <div key={c.name} className="text-center">
                 <div className="mx-auto h-36 w-36 overflow-hidden rounded-full ring-4 ring-white shadow-md">
-                  <img src={chef} alt={c.name} loading="lazy" className="h-full w-full object-cover" />
+                  <img src={c.img} alt={c.name} loading="lazy" width={768} height={768} className="h-full w-full object-cover" />
                 </div>
                 <h3 className="mt-4 text-lg font-extrabold text-ink">{c.name}</h3>
                 <p className="text-xs uppercase tracking-widest text-primary">{c.role}</p>
@@ -186,10 +188,10 @@ function Home() {
 
       {/* Stats banner */}
       <section className="relative bg-ink text-white">
-        <div className="absolute inset-0 bg-gradient-to-br from-black/70 to-black/40" />
+        <div className="absolute inset-0 bg-gradient-to-br from-black/30 to-black/10" />
         <div className="relative mx-auto max-w-5xl px-4 py-20 text-center">
           <span className="text-xs font-bold uppercase tracking-widest text-primary">Premiado em 2025</span>
-          <h2 className="mx-auto mt-3 max-w-2xl text-3xl font-extrabold md:text-4xl">
+          <h2 className="mx-auto mt-3 max-w-2xl text-3xl font-extrabold text-white drop-shadow-[0_2px_8px_rgba(0,0,0,0.6)] md:text-4xl">
             Uma comunidade global apaixonada por culinária japonesa
           </h2>
           <div className="mt-10 grid gap-6 sm:grid-cols-3">
