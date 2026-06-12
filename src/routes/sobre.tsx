@@ -5,6 +5,11 @@ import { PageBanner } from "@/components/PageBanner";
 import { PageBannerSketches } from "@/components/SketchMotifs";
 import { Play } from "lucide-react";
 import chef from "@/assets/chef-hero.jpg";
+import chefAkira from "@/assets/chef-akira.jpg";
+import chefMei from "@/assets/chef-mei.jpg";
+import chefYuki from "@/assets/chef-yuki.jpg";
+import chefHaruka from "@/assets/chef-haruka.jpg";
+import chefRen from "@/assets/chef-ren.jpg";
 import video from "@/assets/video-poster.jpg";
 import grandma from "@/assets/grandma-recipes.jpg";
 
@@ -94,15 +99,17 @@ function AboutPage() {
           <p className="mx-auto mt-3 max-w-2xl text-sm text-muted-foreground">
             Três trajetórias diferentes, uma mesma obsessão: a precisão silenciosa da cozinha japonesa.
           </p>
-          <div className="mt-12 grid gap-10 md:grid-cols-3">
+          <div className="mt-12 grid gap-10 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5">
             {[
-              { name: "Akira Tanaka", role: "Itamae" },
-              { name: "Mei Sato", role: "Pâtissière" },
-              { name: "Yuki Nakamura", role: "Sous Chef" },
+              { name: "Akira Tanaka", role: "Itamae", img: chefAkira },
+              { name: "Mei Sato", role: "Pâtissière", img: chefMei },
+              { name: "Yuki Nakamura", role: "Sous Chef", img: chefYuki },
+              { name: "Haruka Inoue", role: "Chef de Sushi", img: chefHaruka },
+              { name: "Ren Kobayashi", role: "Mestre Ramen", img: chefRen },
             ].map((c) => (
               <div key={c.name}>
                 <div className="mx-auto h-40 w-40 overflow-hidden rounded-full ring-4 ring-white shadow-md">
-                  <img src={chef} alt={c.name} loading="lazy" className="h-full w-full object-cover" />
+                  <img src={c.img} alt={c.name} loading="lazy" width={768} height={768} className="h-full w-full object-cover" />
                 </div>
                 <h3 className="mt-4 text-lg font-extrabold text-ink">{c.name}</h3>
                 <p className="text-xs uppercase tracking-widest text-primary">{c.role}</p>
