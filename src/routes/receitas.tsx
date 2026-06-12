@@ -1,9 +1,11 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { SiteHeader } from "@/components/SiteHeader";
 import { SiteFooter } from "@/components/SiteFooter";
 import { PageBanner } from "@/components/PageBanner";
 import { RecipeCard } from "@/components/RecipeCard";
 import { recipes } from "@/lib/recipes";
+import { BookOpen } from "lucide-react";
+
 
 export const Route = createFileRoute("/receitas")({
   head: () => ({
@@ -33,10 +35,25 @@ function RecipesPage() {
         crumbs={[{ label: "Home", to: "/" }, { label: "Receitas" }]}
       />
       <section className="mx-auto max-w-7xl px-4 py-20">
+        <Link
+          to="/receitas/nomes-e-tipos"
+          className="mb-10 flex items-center gap-4 rounded-2xl border border-primary/20 bg-cream p-5 shadow-sm transition hover:-translate-y-0.5 hover:shadow-md"
+        >
+          <span className="grid h-12 w-12 shrink-0 place-items-center rounded-full bg-primary/10 text-primary">
+            <BookOpen className="h-5 w-5" />
+          </span>
+          <div className="flex-1">
+            <p className="text-xs font-bold uppercase tracking-widest text-primary">Novo guia</p>
+            <p className="text-sm font-bold text-ink">Comidas Japonesas: nomes e tipos explicados</p>
+            <p className="text-xs text-muted-foreground">Niguiri, hossomaki, temaki, kani, ramen, tempura e muito mais.</p>
+          </div>
+          <span className="text-sm font-bold text-primary">→</span>
+        </Link>
         <h2 className="sr-only">Lista de receitas japonesas</h2>
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {recipes.map((r) => <RecipeCard key={r.slug} recipe={r} />)}
         </div>
+
 
         <div className="mt-12 flex items-center justify-center gap-2">
           <button className="grid h-9 w-9 place-items-center rounded-md bg-primary text-sm font-bold text-primary-foreground">1</button>
