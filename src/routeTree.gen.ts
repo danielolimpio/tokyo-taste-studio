@@ -14,6 +14,7 @@ import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as ReceitasRouteImport } from './routes/receitas'
 import { Route as ContatoRouteImport } from './routes/contato'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as ReceitasNomesETiposRouteImport } from './routes/receitas.nomes-e-tipos'
 import { Route as ReceitasSlugRouteImport } from './routes/receitas.$slug'
 
 const SobreRoute = SobreRouteImport.update({
@@ -41,6 +42,11 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ReceitasNomesETiposRoute = ReceitasNomesETiposRouteImport.update({
+  id: '/nomes-e-tipos',
+  path: '/nomes-e-tipos',
+  getParentRoute: () => ReceitasRoute,
+} as any)
 const ReceitasSlugRoute = ReceitasSlugRouteImport.update({
   id: '/$slug',
   path: '/$slug',
@@ -54,6 +60,7 @@ export interface FileRoutesByFullPath {
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/sobre': typeof SobreRoute
   '/receitas/$slug': typeof ReceitasSlugRoute
+  '/receitas/nomes-e-tipos': typeof ReceitasNomesETiposRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -62,6 +69,7 @@ export interface FileRoutesByTo {
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/sobre': typeof SobreRoute
   '/receitas/$slug': typeof ReceitasSlugRoute
+  '/receitas/nomes-e-tipos': typeof ReceitasNomesETiposRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -71,6 +79,7 @@ export interface FileRoutesById {
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/sobre': typeof SobreRoute
   '/receitas/$slug': typeof ReceitasSlugRoute
+  '/receitas/nomes-e-tipos': typeof ReceitasNomesETiposRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -81,6 +90,7 @@ export interface FileRouteTypes {
     | '/sitemap.xml'
     | '/sobre'
     | '/receitas/$slug'
+    | '/receitas/nomes-e-tipos'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -89,6 +99,7 @@ export interface FileRouteTypes {
     | '/sitemap.xml'
     | '/sobre'
     | '/receitas/$slug'
+    | '/receitas/nomes-e-tipos'
   id:
     | '__root__'
     | '/'
@@ -97,6 +108,7 @@ export interface FileRouteTypes {
     | '/sitemap.xml'
     | '/sobre'
     | '/receitas/$slug'
+    | '/receitas/nomes-e-tipos'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -144,6 +156,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/receitas/nomes-e-tipos': {
+      id: '/receitas/nomes-e-tipos'
+      path: '/nomes-e-tipos'
+      fullPath: '/receitas/nomes-e-tipos'
+      preLoaderRoute: typeof ReceitasNomesETiposRouteImport
+      parentRoute: typeof ReceitasRoute
+    }
     '/receitas/$slug': {
       id: '/receitas/$slug'
       path: '/$slug'
@@ -156,10 +175,12 @@ declare module '@tanstack/react-router' {
 
 interface ReceitasRouteChildren {
   ReceitasSlugRoute: typeof ReceitasSlugRoute
+  ReceitasNomesETiposRoute: typeof ReceitasNomesETiposRoute
 }
 
 const ReceitasRouteChildren: ReceitasRouteChildren = {
   ReceitasSlugRoute: ReceitasSlugRoute,
+  ReceitasNomesETiposRoute: ReceitasNomesETiposRoute,
 }
 
 const ReceitasRouteWithChildren = ReceitasRoute._addFileChildren(
