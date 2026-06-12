@@ -34,7 +34,7 @@ function ContactPage() {
       />
 
       {/* Info cards */}
-      <section className="mx-auto -mt-10 grid max-w-6xl gap-6 px-4 md:grid-cols-3">
+      <section className="mx-auto mt-12 grid max-w-6xl gap-6 px-4 md:grid-cols-3">
         {[
           { Icon: MapPin, title: "Endereço Físico", lines: ["Rua Liberdade, 123", "Bairro Liberdade, São Paulo"] },
           { Icon: Send, title: "E-mail", lines: ["contato@comidasjaponesas.com", "imprensa@comidasjaponesas.com"] },
