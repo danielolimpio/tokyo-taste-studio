@@ -8,11 +8,12 @@ import { useState } from "react";
 export const Route = createFileRoute("/contato")({
   head: () => ({
     meta: [
-      { title: "Contato | Blog de Comidas Japonesas e Culinária Japonesa" },
-      { name: "description", content: "Entre em contato com o ComidasJaponesas: sugestões de receitas de culinária japonesa, parcerias gastronômicas, aulas de sushi e dúvidas sobre comida japonesa." },
-      { name: "keywords", content: "contato comidas japonesas, aulas de culinária japonesa, aula de sushi presencial, parceria blog de comida japonesa" },
+      { title: "Contato | Comidas Japonesas" },
+      { name: "description", content: "Fale com o ComidasJaponesas: sugestões de receitas, parcerias gastronômicas, aulas de sushi e dúvidas sobre culinária japonesa." },
+      { name: "keywords", content: "contato comidas japonesas, aulas de culinária japonesa, aula de sushi" },
       { property: "og:title", content: "Contato | Comidas Japonesas" },
       { property: "og:description", content: "Fale com a equipe do blog de culinária japonesa." },
+
       { property: "og:url", content: "/contato" },
     ],
     links: [{ rel: "canonical", href: "/contato" }],

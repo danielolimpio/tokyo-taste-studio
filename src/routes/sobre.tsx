@@ -11,11 +11,12 @@ import grandma from "@/assets/grandma-recipes.jpg";
 export const Route = createFileRoute("/sobre")({
   head: () => ({
     meta: [
-      { title: "Sobre Nós | Blog de Comidas e Culinária Japonesa" },
-      { name: "description", content: "Conheça o ComidasJaponesas: blog brasileiro de culinária japonesa com receitas testadas de sushi, ramen, temaki, tempura e clássicos da gastronomia japonesa." },
-      { name: "keywords", content: "blog de culinária japonesa, comidas japonesas tradicionais, gastronomia japonesa, chefs de comida japonesa, história da culinária japonesa" },
-      { property: "og:title", content: "Sobre | Blog de Comidas Japonesas" },
-      { property: "og:description", content: "Quem está por trás das receitas de comida japonesa mais testadas do Brasil." },
+      { title: "Sobre | Blog de Comidas Japonesas" },
+      { name: "description", content: "Conheça o ComidasJaponesas: receitas testadas de culinária japonesa — sushi, ramen, temaki e clássicos da gastronomia japonesa." },
+      { name: "keywords", content: "blog de culinária japonesa, comidas japonesas, gastronomia japonesa" },
+      { property: "og:title", content: "Sobre | Comidas Japonesas" },
+      { property: "og:description", content: "Quem está por trás das receitas de comida japonesa do blog." },
+
       { property: "og:url", content: "/sobre" },
     ],
     links: [{ rel: "canonical", href: "/sobre" }],
