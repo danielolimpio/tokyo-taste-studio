@@ -33,9 +33,11 @@ function RecipesPage() {
         crumbs={[{ label: "Home", to: "/" }, { label: "Receitas" }]}
       />
       <section className="mx-auto max-w-7xl px-4 py-20">
+        <h2 className="sr-only">Lista de receitas japonesas</h2>
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {recipes.map((r) => <RecipeCard key={r.slug} recipe={r} />)}
         </div>
+
         <div className="mt-12 flex items-center justify-center gap-2">
           <button className="grid h-9 w-9 place-items-center rounded-md bg-primary text-sm font-bold text-primary-foreground">1</button>
           <button className="grid h-9 w-9 place-items-center rounded-md text-sm font-bold text-muted-foreground hover:bg-secondary">2</button>
