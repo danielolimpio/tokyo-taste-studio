@@ -93,7 +93,45 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
         href: "https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap",
       },
     ],
+    scripts: [
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@graph": [
+            {
+              "@type": "WebSite",
+              "@id": "/#website",
+              name: "ComidasJaponesas",
+              url: "/",
+              inLanguage: "pt-BR",
+              potentialAction: {
+                "@type": "SearchAction",
+                target: "/receitas?q={search_term_string}",
+                "query-input": "required name=search_term_string",
+              },
+            },
+            {
+              "@type": "Organization",
+              "@id": "/#organization",
+              name: "ComidasJaponesas",
+              url: "/",
+              email: "contato@comidasjaponesas.com",
+              telephone: "+55-11-4002-8922",
+              address: {
+                "@type": "PostalAddress",
+                streetAddress: "Rua Liberdade, 123",
+                addressLocality: "São Paulo",
+                addressRegion: "SP",
+                addressCountry: "BR",
+              },
+            },
+          ],
+        }),
+      },
+    ],
   }),
+
   shellComponent: RootShell,
   component: RootComponent,
   notFoundComponent: NotFoundComponent,
