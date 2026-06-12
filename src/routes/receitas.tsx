@@ -26,8 +26,9 @@ function RecipesPage() {
     <div className="min-h-screen bg-background">
       <SiteHeader />
       <PageBanner
-        title="Receitas"
-        subtitle="Do nigiri mais minimalista à tigela de ramen mais reconfortante: cada prato testado e fotografado por nossa cozinha — pronto para você reproduzir em casa."
+        title="Receitas Japonesas"
+        subtitle="Do nigiri minimalista ao ramen tonkotsu mais reconfortante: aprenda como fazer comida japonesa em casa com receitas testadas — sushi, temaki, hot roll, yakisoba, tempura, gyoza, mochi e o clássico molho teriyaki."
+
         crumbs={[{ label: "Home", to: "/" }, { label: "Receitas" }]}
       />
       <section className="mx-auto max-w-7xl px-4 py-20">
