@@ -12,12 +12,16 @@ import chef from "@/assets/chef-hero.jpg";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "ComidasJaponesas — Receitas autênticas da culinária japonesa" },
-      { name: "description", content: "Sushi, ramen, tempura, mochi e dezenas de receitas tradicionais japonesas explicadas passo a passo." },
-      { property: "og:title", content: "ComidasJaponesas" },
-      { property: "og:description", content: "Receitas autênticas da culinária japonesa." },
+      { title: "Comidas Japonesas | Receitas de Culinária Japonesa Passo a Passo" },
+      { name: "description", content: "Aprenda a fazer comidas japonesas em casa: receitas de sushi, ramen, temaki, hot roll, yakisoba, tempura, gyoza, mochi e molho teriyaki — culinária japonesa fácil e autêntica." },
+      { name: "keywords", content: "comidas japonesas, receitas japonesas, culinária japonesa, como fazer sushi em casa, receita de ramen, receita de temaki, hot roll, yakisoba receita, tempura, gyoza, mochi, molho teriyaki, arroz japonês, sashimi, comida oriental, gastronomia japonesa" },
+      { property: "og:title", content: "Comidas Japonesas | Receitas Autênticas de Culinária Japonesa" },
+      { property: "og:description", content: "Sushi, ramen, temaki, yakisoba e dezenas de receitas de comida japonesa passo a passo." },
+      { property: "og:url", content: "/" },
     ],
+    links: [{ rel: "canonical", href: "/" }],
   }),
+
   component: Home,
 });
 
@@ -43,7 +47,7 @@ function Home() {
               Receita da semana
             </span>
             <h1 className="text-4xl font-extrabold leading-[1.05] text-ink md:text-6xl">
-              Pancakes Soufflé<br />Japoneses
+              Comidas Japonesas<br />Receitas Autênticas
             </h1>
             <div className="mt-5 flex flex-wrap items-center gap-5 text-sm text-muted-foreground">
               <span className="flex items-center gap-2">
@@ -53,13 +57,15 @@ function Home() {
                 Por <span className="font-semibold text-foreground">Chef Akira</span>
               </span>
               <span className="flex items-center gap-2">
-                <Clock className="h-4 w-4" />1 hora e 20 min
+                <Clock className="h-4 w-4" />Atualizado semanalmente
               </span>
             </div>
             <p className="mt-5 max-w-md text-sm leading-relaxed text-muted-foreground">
-              Altos, fofos e impossivelmente macios — o segredo está em bater as claras em ponto firme
-              e cozinhar em fogo baixíssimo com tampa. Um abraço quente da culinária japonesa.
+              Aprenda a fazer as principais comidas japonesas em casa: sushi, ramen, temaki,
+              yakisoba, tempura, hot roll, gyoza e mochi — receitas de culinária japonesa
+              testadas, com técnica tradicional e ingredientes acessíveis.
             </p>
+
             <div className="mt-7 flex flex-wrap gap-3">
               <Link
                 to="/receitas/$slug"
@@ -87,12 +93,13 @@ function Home() {
       {/* Recipes of the week */}
       <section className="mx-auto max-w-7xl px-4 py-20">
         <div className="mx-auto max-w-2xl text-center">
-          <h2 className="text-3xl font-extrabold text-ink md:text-4xl">Receitas da Semana</h2>
+          <h2 className="text-3xl font-extrabold text-ink md:text-4xl">Receitas Japonesas da Semana</h2>
           <p className="mt-3 text-sm text-muted-foreground">
-            Selecionadas a dedo pela cozinha — do peixe cru ao doce de matcha, há um pedaço de Japão
-            para todos os paladares.
+            As receitas de comida japonesa mais buscadas: como fazer sushi em casa, ramen tonkotsu,
+            temaki de salmão, yakisoba de frango e tempura crocante — passo a passo.
           </p>
         </div>
+
         <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {week.map((r) => <RecipeCard key={r.slug} recipe={r} />)}
         </div>
@@ -107,12 +114,13 @@ function Home() {
       <section className="bg-secondary/40">
         <div className="mx-auto max-w-7xl px-4 py-20">
           <div className="mx-auto max-w-2xl text-center">
-            <h2 className="text-3xl font-extrabold text-ink md:text-4xl">Receitas por Categoria</h2>
+            <h2 className="text-3xl font-extrabold text-ink md:text-4xl">Receitas de Culinária Japonesa por Categoria</h2>
             <p className="mt-3 text-sm text-muted-foreground">
-              Navegue pela tradição japonesa por tipo de prato — cada categoria carrega séculos de
-              técnica e história.
+              Explore a gastronomia japonesa por tipo de prato: sushi e sashimi, sopas de ramen e
+              missoshiru, grelhados yakitori e os clássicos doces japoneses como mochi e dorayaki.
             </p>
           </div>
+
           <div className="mt-12 grid gap-5 sm:grid-cols-2 md:grid-cols-4">
             {categories.map(({ label, icon: Icon }) => (
               <Link

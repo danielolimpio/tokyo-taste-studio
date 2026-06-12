@@ -11,20 +11,45 @@ export const Route = createFileRoute("/receitas/$slug")({
     if (!recipe) throw notFound();
     return { recipe };
   },
-  head: ({ loaderData }) => {
+  head: ({ loaderData, params }) => {
     const r = loaderData?.recipe;
     if (!r) return { meta: [{ title: "Receita não encontrada" }] };
+    const title = `${r.title} | Receita de Comida Japonesa Passo a Passo`;
+    const description = `${r.excerpt} Aprenda essa receita autêntica de culinária japonesa (${r.category.toLowerCase()}) em ${r.prep} de preparo.`;
     return {
       meta: [
-        { title: `${r.title} — ComidasJaponesas` },
-        { name: "description", content: r.excerpt },
-        { property: "og:title", content: r.title },
-        { property: "og:description", content: r.excerpt },
+        { title },
+        { name: "description", content: description },
+        { name: "keywords", content: `${r.title.toLowerCase()}, receita de ${r.category.toLowerCase()}, comida japonesa, culinária japonesa, receita japonesa passo a passo, como fazer ${r.title.toLowerCase()} em casa` },
+        { property: "og:title", content: title },
+        { property: "og:description", content: description },
+        { property: "og:type", content: "article" },
+        { property: "og:url", content: `/receitas/${params.slug}` },
         { property: "og:image", content: r.image },
         { name: "twitter:image", content: r.image },
       ],
+      links: [{ rel: "canonical", href: `/receitas/${params.slug}` }],
+      scripts: [{
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "Recipe",
+          name: r.title,
+          image: [r.image],
+          description: r.excerpt,
+          recipeCuisine: "Japonesa",
+          recipeCategory: r.category,
+          recipeYield: r.servings,
+          prepTime: r.prep,
+          cookTime: r.cook,
+          author: { "@type": "Person", name: r.author },
+          recipeIngredient: r.ingredients,
+          recipeInstructions: r.directions.map((d) => ({ "@type": "HowToStep", text: d })),
+        }),
+      }],
     };
   },
+
   notFoundComponent: () => (
     <div className="min-h-screen bg-background">
       <SiteHeader />

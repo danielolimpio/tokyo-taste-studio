@@ -8,12 +8,16 @@ import { useState } from "react";
 export const Route = createFileRoute("/contato")({
   head: () => ({
     meta: [
-      { title: "Contato — ComidasJaponesas" },
-      { name: "description", content: "Fale com a equipe do ComidasJaponesas — sugestões de receitas, parcerias e mais." },
-      { property: "og:title", content: "Contato — ComidasJaponesas" },
-      { property: "og:description", content: "Envie sua mensagem para a nossa cozinha." },
+      { title: "Contato | Blog de Comidas Japonesas e Culinária Japonesa" },
+      { name: "description", content: "Entre em contato com o ComidasJaponesas: sugestões de receitas de culinária japonesa, parcerias gastronômicas, aulas de sushi e dúvidas sobre comida japonesa." },
+      { name: "keywords", content: "contato comidas japonesas, aulas de culinária japonesa, aula de sushi presencial, parceria blog de comida japonesa" },
+      { property: "og:title", content: "Contato | Comidas Japonesas" },
+      { property: "og:description", content: "Fale com a equipe do blog de culinária japonesa." },
+      { property: "og:url", content: "/contato" },
     ],
+    links: [{ rel: "canonical", href: "/contato" }],
   }),
+
   component: ContactPage,
 });
 
@@ -34,7 +38,7 @@ function ContactPage() {
       />
 
       {/* Info cards */}
-      <section className="mx-auto -mt-10 grid max-w-6xl gap-6 px-4 md:grid-cols-3">
+      <section className="mx-auto mt-12 grid max-w-6xl gap-6 px-4 md:grid-cols-3">
         {[
           { Icon: MapPin, title: "Endereço Físico", lines: ["Rua Liberdade, 123", "Bairro Liberdade, São Paulo"] },
           { Icon: Send, title: "E-mail", lines: ["contato@comidasjaponesas.com", "imprensa@comidasjaponesas.com"] },

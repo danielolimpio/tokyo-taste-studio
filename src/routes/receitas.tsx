@@ -8,12 +8,16 @@ import { recipes } from "@/lib/recipes";
 export const Route = createFileRoute("/receitas")({
   head: () => ({
     meta: [
-      { title: "Receitas — ComidasJaponesas" },
-      { name: "description", content: "Todas as receitas japonesas do blog: sushi, ramen, tempura, yakitori, mochi e muito mais." },
-      { property: "og:title", content: "Receitas — ComidasJaponesas" },
-      { property: "og:description", content: "Catálogo completo de receitas autênticas da culinária japonesa." },
+      { title: "Receitas Japonesas | Sushi, Ramen, Temaki, Yakisoba e Mais" },
+      { name: "description", content: "Catálogo completo de receitas de comida japonesa: como fazer sushi em casa, ramen tonkotsu, temaki de salmão, yakisoba, tempura crocante, hot roll, gyoza, mochi e molho teriyaki." },
+      { name: "keywords", content: "receitas japonesas, receitas de comida japonesa, como fazer sushi em casa, receita de ramen, receita de temaki, receita de yakisoba, receita de tempura, hot roll caseiro, gyoza receita, mochi receita, molho teriyaki" },
+      { property: "og:title", content: "Receitas Japonesas | Catálogo de Culinária Japonesa" },
+      { property: "og:description", content: "Mais de 9 receitas de culinária japonesa passo a passo: sushi, ramen, temaki, yakisoba, tempura e mais." },
+      { property: "og:url", content: "/receitas" },
     ],
+    links: [{ rel: "canonical", href: "/receitas" }],
   }),
+
   component: RecipesPage,
 });
 
@@ -22,8 +26,9 @@ function RecipesPage() {
     <div className="min-h-screen bg-background">
       <SiteHeader />
       <PageBanner
-        title="Receitas"
-        subtitle="Do nigiri mais minimalista à tigela de ramen mais reconfortante: cada prato testado e fotografado por nossa cozinha — pronto para você reproduzir em casa."
+        title="Receitas Japonesas"
+        subtitle="Do nigiri minimalista ao ramen tonkotsu mais reconfortante: aprenda como fazer comida japonesa em casa com receitas testadas — sushi, temaki, hot roll, yakisoba, tempura, gyoza, mochi e o clássico molho teriyaki."
+
         crumbs={[{ label: "Home", to: "/" }, { label: "Receitas" }]}
       />
       <section className="mx-auto max-w-7xl px-4 py-20">
