@@ -24,7 +24,7 @@ jobs:
         run: npm run build
 
       - name: Mostrar arquivos gerados
-        run: ls -la dist/
+        run: ls -la .output/public/
 
       - name: Deploy FTP para Hostinger
         uses: SamKirkland/FTP-Deploy-Action@v4.3.4
@@ -33,7 +33,7 @@ jobs:
           port: 21
           username: ${{ secrets.FTP_USER }}
           password: ${{ secrets.FTP_PASS }}
-          local-dir: ./dist/
+          local-dir: ./.output/public/
           server-dir: /
           dangerous-clean-slate: true
           dry-run: false
