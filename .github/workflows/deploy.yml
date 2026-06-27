@@ -24,13 +24,14 @@ jobs:
         run: npm run build
 
       - name: Encontrar pasta do build
+        id: build-output
         run: |
           if [ -d "dist/client" ]; then
-            echo "DEPLOY_DIR=dist/client/" >> "$GITHUB_ENV"
+            echo "deploy_dir=dist/client/" >> "$GITHUB_OUTPUT"
           elif [ -d ".output/public" ]; then
-            echo "DEPLOY_DIR=.output/public/" >> "$GITHUB_ENV"
+            echo "deploy_dir=.output/public/" >> "$GITHUB_OUTPUT"
           elif [ -d "dist" ]; then
-            echo "DEPLOY_DIR=dist/" >> "$GITHUB_ENV"
+            echo "deploy_dir=dist/" >> "$GITHUB_OUTPUT"
           else
             echo "Nenhuma pasta de build encontrada. Arquivos na raiz:"
             ls -la
@@ -39,8 +40,8 @@ jobs:
 
       - name: Mostrar arquivos gerados
         run: |
-          echo "Deploy usando: $DEPLOY_DIR"
-          ls -la "$DEPLOY_DIR"
+          echo "Deploy usando: ${{ steps.build-output.outputs.deploy_dir }}"
+          ls -la "${{ steps.build-output.outputs.deploy_dir }}"
 
       - name: Deploy FTP para Hostinger
         uses: SamKirkland/FTP-Deploy-Action@v4.3.4
@@ -49,7 +50,7 @@ jobs:
           port: 21
           username: ${{ secrets.FTP_USER }}
           password: ${{ secrets.FTP_PASS }}
-          local-dir: ./${{ env.DEPLOY_DIR }}
+          local-dir: ./${{ steps.build-output.outputs.deploy_dir }}
           server-dir: /
           dangerous-clean-slate: true
           dry-run: false
