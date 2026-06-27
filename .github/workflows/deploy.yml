@@ -54,7 +54,7 @@ jobs:
           username: ${{ secrets.FTP_USER }}
           password: ${{ secrets.FTP_PASS }}
           local-dir: ./${{ steps.build-output.outputs.deploy_dir }}
-          server-dir: /
+          server-dir: /public_html/
           dangerous-clean-slate: true
           dry-run: false
           log-level: verbose
