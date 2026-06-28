@@ -63,6 +63,6 @@ jobs:
           # A conta FTP da Hostinger deste domínio já abre dentro do public_html.
           # Usar /public_html/ cria public_html/public_html e causa 403 na raiz.
           server-dir: ./
-          dangerous-clean-slate: true
+          dangerous-clean-slate: false
           dry-run: false
           log-level: verbose
