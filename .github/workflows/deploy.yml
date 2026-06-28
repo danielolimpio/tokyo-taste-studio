@@ -41,6 +41,12 @@ jobs:
             exit 1
           fi
 
+      - name: Validar arquivos obrigatórios
+        run: |
+          DEPLOY_DIR="${{ steps.build-output.outputs.deploy_dir }}"
+          test -f "${DEPLOY_DIR}index.html" || (echo "ERRO: index.html não foi gerado em ${DEPLOY_DIR}" && exit 1)
+          test -d "${DEPLOY_DIR}assets" || (echo "ERRO: pasta assets não foi gerada em ${DEPLOY_DIR}" && exit 1)
+
       - name: Mostrar arquivos gerados
         run: |
           echo "Deploy usando: ${{ steps.build-output.outputs.deploy_dir }}"
@@ -54,7 +60,7 @@ jobs:
           username: ${{ secrets.FTP_USER }}
           password: ${{ secrets.FTP_PASS }}
           local-dir: ./${{ steps.build-output.outputs.deploy_dir }}
-          server-dir: /public_html/
+          server-dir: ${{ secrets.FTP_SERVER_DIR || '/domains/comidasjaponesas.com/public_html/' }}
           dangerous-clean-slate: true
           dry-run: false
           log-level: verbose
