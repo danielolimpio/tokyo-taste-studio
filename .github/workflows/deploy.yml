@@ -17,18 +17,17 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '22'
-          cache: npm
+
+      - name: Configurar Bun
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
 
       - name: Instalar dependências
-        run: |
-          if [ -f package-lock.json ]; then
-            npm ci
-          else
-            npm install
-          fi
+        run: bun install --frozen-lockfile
 
       - name: Build do projeto
-        run: npm run build
+        run: bun run build
 
       - name: Preparar build estático para Hostinger
         run: node scripts/prepare-hostinger-static.mjs
@@ -47,4 +46,5 @@ jobs:
           FTP_USER: ${{ secrets.FTP_USER }}
           FTP_PASS: ${{ secrets.FTP_PASS }}
           FTP_LOCAL_DIR: dist/client
+          FTP_TARGET_DIR: "."
           REMOVE_NESTED_PUBLIC_HTML: "true"
