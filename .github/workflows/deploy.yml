@@ -12,10 +12,10 @@ jobs:
       - name: Clonar o repositório
         uses: actions/checkout@v3
 
-      - name: Configurar Node.js 20
-        uses: actions/setup-node@v4
+      - name: Configurar Node.js 18
+        uses: actions/setup-node@v3
         with:
-          node-version: '20'
+          node-version: '18'
 
       - name: Instalar dependências
         run: npm install
@@ -23,43 +23,18 @@ jobs:
       - name: Build do projeto
         run: npm run build
 
-      - name: Preparar build para Hostinger
-        run: node scripts/prepare-hostinger-static.mjs
-
-      - name: Encontrar pasta do build
-        id: build-output
-        run: |
-          if [ -d "dist/client" ]; then
-            echo "deploy_dir=dist/client/" >> "$GITHUB_OUTPUT"
-          elif [ -d ".output/public" ]; then
-            echo "deploy_dir=.output/public/" >> "$GITHUB_OUTPUT"
-          elif [ -d "dist" ]; then
-            echo "deploy_dir=dist/" >> "$GITHUB_OUTPUT"
-          else
-            echo "Nenhuma pasta de build encontrada. Arquivos na raiz:"
-            ls -la
-            exit 1
-          fi
-
-      - name: Validar arquivos obrigatórios
-        run: |
-          DEPLOY_DIR="${{ steps.build-output.outputs.deploy_dir }}"
-          test -f "${DEPLOY_DIR}index.html" || (echo "ERRO: index.html não foi gerado em ${DEPLOY_DIR}" && exit 1)
-          test -d "${DEPLOY_DIR}assets" || (echo "ERRO: pasta assets não foi gerada em ${DEPLOY_DIR}" && exit 1)
-
       - name: Mostrar arquivos gerados
-        run: |
-          echo "Deploy usando: ${{ steps.build-output.outputs.deploy_dir }}"
-          ls -la "${{ steps.build-output.outputs.deploy_dir }}"
+        run: ls -la dist/
 
-      - name: Deploy FTP definitivo para Hostinger
-        env:
-          FTP_HOST: ${{ secrets.FTP_HOST }}
-          FTP_USER: ${{ secrets.FTP_USER }}
-          FTP_PASS: ${{ secrets.FTP_PASS }}
-          FTP_LOCAL_DIR: ${{ steps.build-output.outputs.deploy_dir }}
-          # Opcional: se existir nos Secrets, este caminho vence a detecção automática.
-          # Para a conta atual, deixe vazio para publicar na raiz FTP correta.
-          FTP_TARGET_DIR: ${{ secrets.FTP_SERVER_DIR }}
-          REMOVE_NESTED_PUBLIC_HTML: "true"
-        run: python3 scripts/hostinger_ftp_deploy.py
+      - name: Deploy FTP para Hostinger
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.4
+        with:
+          server: ${{ secrets.FTP_HOST }}
+          port: 21
+          username: ${{ secrets.FTP_USER }}
+          password: ${{ secrets.FTP_PASS }}
+          local-dir: ./dist/
+          server-dir: /
+          dangerous-clean-slate: true
+          dry-run: false
+          log-level: verbose
