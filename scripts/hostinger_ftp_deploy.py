@@ -13,6 +13,16 @@ TARGET_DIR = (os.environ.get("FTP_TARGET_DIR") or "").strip()
 REMOVE_NESTED_PUBLIC_HTML = os.environ.get("REMOVE_NESTED_PUBLIC_HTML", "true").lower() == "true"
 
 SITE_MARKERS = {"index.html", "robots.txt", "llms.txt", "assets", ".htaccess"}
+ACCOUNT_ROOT_MARKERS = {
+    "domains",
+    "mail",
+    "logs",
+    "ssl",
+    "tmp",
+    "etc",
+    "backups",
+    "private_html",
+}
 STALE_FILES = {
     "index.html",
     ".htaccess",
@@ -91,6 +101,12 @@ def choose_target_dir(ftp: FTP) -> str:
     root_names = names(ftp)
     # Se a conta FTP já abre no public_html, os arquivos do site ficam na raiz.
     if SITE_MARKERS.intersection(root_names):
+        return "."
+
+    # Se a raiz visível do FTP contém apenas a duplicação public_html, ela já é
+    # a public_html real do domínio. Publicar dentro dela criaria/atualizaria
+    # public_html/public_html e manteria o 403 na raiz.
+    if "public_html" in root_names and not ACCOUNT_ROOT_MARKERS.intersection(root_names):
         return "."
 
     # Se a conta FTP abre no diretório da conta, publicar dentro de public_html.
