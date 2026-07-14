@@ -36,6 +36,7 @@ STALE_FILES = {
 }
 STALE_DIRS = {"assets"}
 PROTECTED_DIRS = {"domains", "mail", "logs", "ssl", "tmp", "etc", "backups", "private_html"}
+PUBLIC_HTML = "public_html"
 
 
 def names(ftp: FTP) -> set[str]:
@@ -100,19 +101,25 @@ def choose_target_dir(ftp: FTP) -> str:
         return TARGET_DIR
 
     root_names = names(ftp)
+    current_dir = ftp.pwd().strip().rstrip("/")
 
-    # Se o FTP abre na raiz da conta Hostinger, publicar dentro do public_html real.
-    if "public_html" in root_names and ACCOUNT_ROOT_MARKERS.intersection(root_names):
-        return "public_html"
-
-    # Se a conta FTP já abre no public_html, os arquivos do site ficam na raiz.
+    # Caso do print da Hostinger: o FTP/painel já está dentro da public_html
+    # real, mas existe uma public_html duplicada dentro dela. Se já há arquivos
+    # de site na pasta atual, publicar aqui e remover a pasta aninhada.
     if SITE_MARKERS.intersection(root_names):
         return "."
+
+    if current_dir.endswith(f"/{PUBLIC_HTML}") or current_dir == PUBLIC_HTML:
+        return "."
+
+    # Se o FTP abre na raiz da conta Hostinger, publicar dentro do public_html real.
+    if PUBLIC_HTML in root_names and ACCOUNT_ROOT_MARKERS.intersection(root_names):
+        return PUBLIC_HTML
 
     # Se a raiz visível do FTP contém apenas a duplicação public_html, ela já é
     # a public_html real do domínio. Publicar dentro dela criaria/atualizaria
     # public_html/public_html e manteria o 403 na raiz.
-    if "public_html" in root_names and not ACCOUNT_ROOT_MARKERS.intersection(root_names):
+    if PUBLIC_HTML in root_names:
         return "."
 
     return "."
@@ -163,9 +170,11 @@ def main() -> None:
 
         # Remove somente o public_html duplicado dentro da pasta escolhida para publicação.
         # Isso evita o caminho public_html/public_html que causa 403 na raiz do domínio.
-        if REMOVE_NESTED_PUBLIC_HTML and "public_html" in names(ftp) and is_dir(ftp, "public_html"):
+        if REMOVE_NESTED_PUBLIC_HTML and PUBLIC_HTML in names(ftp) and is_dir(ftp, PUBLIC_HTML):
             print("Removendo public_html duplicado dentro da raiz publicada...")
-            remove_remote_path(ftp, "public_html")
+            remove_remote_path(ftp, PUBLIC_HTML)
+            if PUBLIC_HTML in names(ftp):
+                raise SystemExit("Não foi possível remover a pasta public_html duplicada; deploy abortado.")
 
         for protected in sorted(PROTECTED_DIRS.intersection(names(ftp))):
             print(f"Mantendo pasta protegida da hospedagem: {protected}")
@@ -177,8 +186,10 @@ def main() -> None:
             raise SystemExit("Deploy concluído sem index.html remoto; abortando.")
         if "assets" not in final_names:
             raise SystemExit("Deploy concluído sem assets remoto; abortando.")
+        if PUBLIC_HTML in final_names:
+            raise SystemExit("A pasta public_html duplicada ainda existe na raiz publicada; deploy abortado.")
 
-        print("Deploy Hostinger finalizado com index.html e assets na raiz correta.")
+        print("Deploy Hostinger finalizado: index.html e assets estão na raiz correta, sem public_html duplicada.")
 
 
 if __name__ == "__main__":
