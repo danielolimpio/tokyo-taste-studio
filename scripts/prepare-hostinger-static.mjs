@@ -1,5 +1,16 @@
-import { existsSync, readdirSync, writeFileSync, statSync, readFileSync } from "node:fs";
+import {
+  cpSync,
+  existsSync,
+  mkdirSync,
+  readFileSync,
+  readdirSync,
+  rmSync,
+  statSync,
+  writeFileSync,
+} from "node:fs";
 import { join } from "node:path";
+
+const deployDir = "hostinger-dist";
 
 const candidates = [
   "dist/client",
@@ -41,7 +52,16 @@ if (!publicDir) {
 }
 
 const assetsDir = join(publicDir, "assets");
-const files = readdirSync(assetsDir);
+rmSync(deployDir, { recursive: true, force: true });
+mkdirSync(deployDir, { recursive: true });
+cpSync(publicDir, deployDir, { recursive: true });
+
+const deployAssetsDir = join(deployDir, "assets");
+if (!existsSync(deployAssetsDir)) {
+  throw new Error(`Assets directory not copied to ${deployAssetsDir}.`);
+}
+
+const files = readdirSync(deployAssetsDir);
 
 // The real client entry contains the Vite mapDeps preamble and no internal imports.
 // Pick the index-*.js file that contains "__vite__mapDeps" or, failing that, has no
@@ -50,7 +70,7 @@ const jsFiles = files.filter((f) => /\.js$/.test(f));
 let entryScript = null;
 
 for (const f of jsFiles) {
-  const content = readFileSync(join(assetsDir, f), "utf8").slice(0, 2000);
+  const content = readFileSync(join(deployAssetsDir, f), "utf8").slice(0, 2000);
   if (content.includes("__vite__mapDeps")) {
     entryScript = f;
     break;
@@ -61,13 +81,13 @@ if (!entryScript) {
   // Fallback: pick the largest index-*.js
   const indexFiles = jsFiles
     .filter((f) => /^index-[\w-]+\.js$/.test(f))
-    .map((f) => ({ f, size: statSync(join(assetsDir, f)).size }))
+    .map((f) => ({ f, size: statSync(join(deployAssetsDir, f)).size }))
     .sort((a, b) => b.size - a.size);
   if (indexFiles.length > 0) entryScript = indexFiles[0].f;
 }
 
 if (!entryScript) {
-  throw new Error(`Could not identify client entry script in ${assetsDir}.`);
+  throw new Error(`Could not identify client entry script in ${deployAssetsDir}.`);
 }
 
 const stylesheet = files.find((f) => /\.css$/.test(f));
@@ -116,9 +136,9 @@ DirectoryIndex index.html
 Options -Indexes
 `;
 
-writeFileSync(join(publicDir, "index.html"), html);
-writeFileSync(join(publicDir, ".htaccess"), htaccess);
+writeFileSync(join(deployDir, "index.html"), html);
+writeFileSync(join(deployDir, ".htaccess"), htaccess);
 
-console.log(`Hostinger static files created in ${publicDir}:`);
+console.log(`Hostinger static files created in ${deployDir} from ${publicDir}:`);
 console.log(`  - index.html (entry: /assets/${entryScript}${stylesheet ? `, css: /assets/${stylesheet}` : ""})`);
 console.log(`  - .htaccess`);

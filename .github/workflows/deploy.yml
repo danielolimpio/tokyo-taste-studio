@@ -35,9 +35,10 @@ jobs:
       - name: Mostrar arquivos gerados
         run: |
           echo "Conteúdo preparado para envio:"
-          ls -la dist/client
-          test -f dist/client/index.html
-          test -d dist/client/assets
+          ls -la hostinger-dist
+          test -f hostinger-dist/index.html
+          test -f hostinger-dist/.htaccess
+          test -d hostinger-dist/assets
 
       - name: Deploy FTP para Hostinger sem duplicar public_html
         run: python3 scripts/hostinger_ftp_deploy.py
@@ -45,6 +46,5 @@ jobs:
           FTP_HOST: ${{ secrets.FTP_HOST }}
           FTP_USER: ${{ secrets.FTP_USER }}
           FTP_PASS: ${{ secrets.FTP_PASS }}
-          FTP_LOCAL_DIR: dist/client
-          FTP_TARGET_DIR: "."
+          FTP_LOCAL_DIR: hostinger-dist
           REMOVE_NESTED_PUBLIC_HTML: "true"
