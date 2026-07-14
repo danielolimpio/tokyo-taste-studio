@@ -1,0 +1,28 @@
+# ComidasJaponesas
+
+> Blog brasileiro de culinária japonesa com receitas autênticas de comida japonesa: sushi, ramen, temaki, tempura, yakisoba, hot roll, gyoza, mochi e molho teriyaki — passo a passo.
+
+ComidasJaponesas reúne receitas testadas pela cozinha do blog, com técnica tradicional japonesa adaptada para ingredientes acessíveis no Brasil. O conteúdo cobre desde clássicos do dia a dia (arroz japonês, missoshiru, yakisoba) até pratos mais elaborados (ramen tonkotsu, sushi variado, tempura crocante e doces wagashi).
+
+## Pages
+
+- [Home](/): receitas em destaque, categorias de culinária japonesa e novidades semanais.
+- [Receitas](/receitas): catálogo completo de receitas de comida japonesa.
+- [Sobre](/sobre): história do blog, chefs e proposta editorial.
+- [Contato](/contato): canais de contato, aulas presenciais e parcerias.
+
+## Receitas em destaque
+
+- [Sushi Variado Tradicional](/receitas/sushi-variado-tradicional): nigiri e maki com salmão e atum, arroz shari passo a passo.
+- [Ramen Tonkotsu Caseiro](/receitas/ramen-tonkotsu-caseiro): caldo de osso de porco, chashu e ajitsuke tamago.
+- [Tempura de Camarão](/receitas/tempura-de-camarao-crocante): técnica para massa leve e fritura crocante.
+- [Chicken Katsu Curry](/receitas/chicken-katsu-curry): frango empanado com panko e curry japonês.
+- [Sopa de Missô](/receitas/sopa-de-missô-classica): dashi, tofu e wakame — clássica e rápida.
+- [Yakitori de Frango](/receitas/yakitori-de-frango-com-tare): espetinhos grelhados com molho tare caramelizado.
+- [Chirashi Sushi](/receitas/chirashi-sushi-colorido): tigela festiva de arroz temperado com salmão, atum e ikura.
+- [Takoyaki de Polvo](/receitas/takoyaki-de-polvo): petisco de Osaka com molho takoyaki e bonito.
+- [Mochi Dango](/receitas/mochi-dango-tradicional): doce de arroz glutinoso com matcha e anko.
+
+## Optional
+
+- [Política e Termos](/sobre): informações editoriais e legais.

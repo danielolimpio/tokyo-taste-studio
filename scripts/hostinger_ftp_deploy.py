@@ -35,6 +35,7 @@ STALE_FILES = {
     ".ftp-deploy-sync-state-hostinger-v2.json",
 }
 STALE_DIRS = {"assets"}
+PROTECTED_DIRS = {"domains", "mail", "logs", "ssl", "tmp", "etc", "backups", "private_html"}
 
 
 def names(ftp: FTP) -> set[str]:
@@ -99,6 +100,11 @@ def choose_target_dir(ftp: FTP) -> str:
         return TARGET_DIR
 
     root_names = names(ftp)
+
+    # Se o FTP abre na raiz da conta Hostinger, publicar dentro do public_html real.
+    if "public_html" in root_names and ACCOUNT_ROOT_MARKERS.intersection(root_names):
+        return "public_html"
+
     # Se a conta FTP já abre no public_html, os arquivos do site ficam na raiz.
     if SITE_MARKERS.intersection(root_names):
         return "."
@@ -109,15 +115,11 @@ def choose_target_dir(ftp: FTP) -> str:
     if "public_html" in root_names and not ACCOUNT_ROOT_MARKERS.intersection(root_names):
         return "."
 
-    # Se a conta FTP abre no diretório da conta, publicar dentro de public_html.
-    if "public_html" in root_names and is_dir(ftp, "public_html"):
-        return "public_html"
-
     return "."
 
 
 def upload_dir(ftp: FTP, local_dir: Path) -> None:
-    for item in sorted(local_dir.iterdir(), key=lambda p: (p.is_file(), p.name.lower())):
+    for item in sorted(local_dir.iterdir(), key=lambda p: (p.name != "index.html", p.is_file(), p.name.lower())):
         if item.name in {".DS_Store", "Thumbs.db"}:
             continue
 
@@ -164,6 +166,9 @@ def main() -> None:
         if REMOVE_NESTED_PUBLIC_HTML and "public_html" in names(ftp) and is_dir(ftp, "public_html"):
             print("Removendo public_html duplicado dentro da raiz publicada...")
             remove_remote_path(ftp, "public_html")
+
+        for protected in sorted(PROTECTED_DIRS.intersection(names(ftp))):
+            print(f"Mantendo pasta protegida da hospedagem: {protected}")
 
         upload_dir(ftp, LOCAL_DIR)
 
