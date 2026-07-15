@@ -186,6 +186,11 @@ def main() -> None:
         print(f"Diretório remoto escolhido: {target}")
         ensure_cwd(ftp, target)
         print(f"Publicando em: {ftp.pwd()}")
+        assert_not_account_root(ftp)
+
+        # Primeiro remove a pasta public_html aninhada, caso ela exista com builds
+        # antigos. Assim o upload não continua atualizando a pasta errada.
+        remove_nested_public_html(ftp)
 
         remote_names = names(ftp)
         for stale in sorted(STALE_FILES.intersection(remote_names)):
@@ -193,18 +198,14 @@ def main() -> None:
         for stale in sorted(STALE_DIRS.intersection(remote_names)):
             remove_remote_path(ftp, stale)
 
-        # Remove somente o public_html duplicado dentro da pasta escolhida para publicação.
-        # Isso evita o caminho public_html/public_html que causa 403 na raiz do domínio.
-        if REMOVE_NESTED_PUBLIC_HTML and PUBLIC_HTML in names(ftp) and is_dir(ftp, PUBLIC_HTML):
-            print("Removendo public_html duplicado dentro da raiz publicada...")
-            remove_remote_path(ftp, PUBLIC_HTML)
-            if PUBLIC_HTML in names(ftp):
-                raise SystemExit("Não foi possível remover a pasta public_html duplicada; deploy abortado.")
+        remove_nested_public_html(ftp)
 
         for protected in sorted(PROTECTED_DIRS.intersection(names(ftp))):
             print(f"Mantendo pasta protegida da hospedagem: {protected}")
 
         upload_dir(ftp, LOCAL_DIR)
+
+        remove_nested_public_html(ftp)
 
         final_names = names(ftp)
         if "index.html" not in final_names:
