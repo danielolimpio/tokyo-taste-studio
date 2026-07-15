@@ -61,6 +61,13 @@ if (!existsSync(deployAssetsDir)) {
   throw new Error(`Assets directory not copied to ${deployAssetsDir}.`);
 }
 
+// Nunca deixe uma pasta public_html no pacote local. Se ela existir no build,
+// a Hostinger recria public_html/public_html durante o FTP.
+const accidentalPublicHtml = join(deployDir, "public_html");
+if (existsSync(accidentalPublicHtml)) {
+  rmSync(accidentalPublicHtml, { recursive: true, force: true });
+}
+
 const files = readdirSync(deployAssetsDir);
 
 // The real client entry contains the Vite mapDeps preamble and no internal imports.

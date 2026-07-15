@@ -3,6 +3,7 @@ from __future__ import annotations
 import os
 from ftplib import FTP, error_perm
 from pathlib import Path
+from posixpath import basename
 
 
 HOST = os.environ["FTP_HOST"]
@@ -11,6 +12,7 @@ PASSWORD = os.environ["FTP_PASS"]
 LOCAL_DIR = Path(os.environ.get("FTP_LOCAL_DIR", "dist/client")).resolve()
 TARGET_DIR = (os.environ.get("FTP_TARGET_DIR") or "").strip()
 REMOVE_NESTED_PUBLIC_HTML = os.environ.get("REMOVE_NESTED_PUBLIC_HTML", "true").lower() == "true"
+ASSUME_LOGIN_IS_WEBROOT = os.environ.get("FTP_ASSUME_LOGIN_IS_WEBROOT", "false").lower() == "true"
 
 SITE_MARKERS = {"index.html", "robots.txt", "llms.txt", "assets", ".htaccess"}
 ACCOUNT_ROOT_MARKERS = {
@@ -39,11 +41,31 @@ PROTECTED_DIRS = {"domains", "mail", "logs", "ssl", "tmp", "etc", "backups", "pr
 PUBLIC_HTML = "public_html"
 
 
+def normalize_name(item: str) -> str:
+    clean = item.strip().rstrip("/")
+    if not clean or clean in {".", ".."}:
+        return ""
+    return basename(clean.replace("\\", "/"))
+
+
 def names(ftp: FTP) -> set[str]:
     try:
-        return {item.strip().rstrip("/") for item in ftp.nlst() if item not in {".", ".."}}
+        return {
+            normalize_name(name)
+            for name, _facts in ftp.mlsd()
+            if normalize_name(name)
+        }
+    except Exception:
+        pass
+
+    try:
+        return {normalize_name(item) for item in ftp.nlst() if normalize_name(item)}
     except error_perm:
         return set()
+
+
+def print_listing(ftp: FTP, label: str) -> None:
+    print(f"{label} ({ftp.pwd()}): {', '.join(sorted(names(ftp))) or '(vazio)'}")
 
 
 def is_dir(ftp: FTP, name: str) -> bool:
@@ -100,6 +122,12 @@ def choose_target_dir(ftp: FTP) -> str:
     if TARGET_DIR:
         return TARGET_DIR
 
+    # Nesta hospedagem, o FTP já entra na public_html externa. Quando ela está
+    # vazia e possui apenas a public_html duplicada, detectar automaticamente é
+    # impossível; por isso o workflow força FTP_TARGET_DIR='.'.
+    if ASSUME_LOGIN_IS_WEBROOT:
+        return "."
+
     root_names = names(ftp)
     current_dir = ftp.pwd().strip().rstrip("/")
 
@@ -129,6 +157,15 @@ def assert_not_account_root(ftp: FTP) -> None:
     current_names = names(ftp)
     current_dir = ftp.pwd().strip().rstrip("/") or "/"
 
+    if ASSUME_LOGIN_IS_WEBROOT:
+        blocked_markers = {"mail", "logs", "ssl", "tmp", "etc", "backups", "private_html"}
+        if blocked_markers.intersection(current_names):
+            raise SystemExit(
+                "Segurança: o FTP parece estar na raiz da conta, não na public_html do site. "
+                "Ajuste FTP_TARGET_DIR antes de apagar a pasta public_html."
+            )
+        return
+
     if current_dir.endswith(f"/{PUBLIC_HTML}") or current_dir == PUBLIC_HTML:
         return
     if SITE_MARKERS.intersection(current_names):
@@ -151,6 +188,12 @@ def remove_nested_public_html(ftp: FTP) -> None:
 
 
 def upload_dir(ftp: FTP, local_dir: Path) -> None:
+    if (local_dir / PUBLIC_HTML).exists():
+        raise SystemExit(
+            "Pacote local inválido: existe uma pasta public_html dentro de hostinger-dist. "
+            "Isso recriaria public_html/public_html."
+        )
+
     for item in sorted(local_dir.iterdir(), key=lambda p: (p.name != "index.html", p.is_file(), p.name.lower())):
         if item.name in {".DS_Store", "Thumbs.db"}:
             continue
@@ -181,11 +224,13 @@ def main() -> None:
         ftp.login(USER, PASSWORD)
         ftp.set_pasv(True)
 
+        print_listing(ftp, "Conteúdo inicial do FTP")
         target = choose_target_dir(ftp)
         print(f"Raiz FTP inicial: {ftp.pwd()}")
         print(f"Diretório remoto escolhido: {target}")
         ensure_cwd(ftp, target)
         print(f"Publicando em: {ftp.pwd()}")
+        print_listing(ftp, "Conteúdo antes da limpeza")
         assert_not_account_root(ftp)
 
         # Primeiro remove a pasta public_html aninhada, caso ela exista com builds
@@ -208,6 +253,7 @@ def main() -> None:
         remove_nested_public_html(ftp)
 
         final_names = names(ftp)
+        print_listing(ftp, "Conteúdo final publicado")
         if "index.html" not in final_names:
             raise SystemExit("Deploy concluído sem index.html remoto; abortando.")
         if "assets" not in final_names:
