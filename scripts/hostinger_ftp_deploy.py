@@ -12,7 +12,6 @@ PASSWORD = os.environ["FTP_PASS"]
 LOCAL_DIR = Path(os.environ.get("FTP_LOCAL_DIR", "dist/client")).resolve()
 TARGET_DIR = (os.environ.get("FTP_TARGET_DIR") or "").strip()
 REMOVE_NESTED_PUBLIC_HTML = os.environ.get("REMOVE_NESTED_PUBLIC_HTML", "true").lower() == "true"
-ASSUME_LOGIN_IS_WEBROOT = os.environ.get("FTP_ASSUME_LOGIN_IS_WEBROOT", "false").lower() == "true"
 
 SITE_MARKERS = {"index.html", "robots.txt", "llms.txt", "assets", ".htaccess"}
 ACCOUNT_ROOT_MARKERS = {
@@ -118,6 +117,26 @@ def ensure_cwd(ftp: FTP, target: str) -> None:
             ftp.cwd(part)
 
 
+def resolve_target_dir(ftp: FTP, target: str) -> str:
+    normalized = target.strip().strip("/")
+    if normalized != PUBLIC_HTML:
+        return target
+
+    current_names = names(ftp)
+    current_dir = ftp.pwd().strip().rstrip("/") or "/"
+
+    # Se o FTP já abre dentro da public_html real, não entre novamente na
+    # public_html duplicada. Isso era o que mantinha public_html/public_html.
+    if current_dir.endswith(f"/{PUBLIC_HTML}") or current_dir == PUBLIC_HTML:
+        return "."
+    if SITE_MARKERS.intersection(current_names):
+        return "."
+
+    # Caso padrão da Hostinger pelo print: o FTP abre um nível acima e mostra
+    # uma public_html real. Entrar nela, limpar a duplicada interna e publicar.
+    return PUBLIC_HTML
+
+
 def choose_target_dir(ftp: FTP) -> str:
     if TARGET_DIR:
         return TARGET_DIR
@@ -156,15 +175,6 @@ def choose_target_dir(ftp: FTP) -> str:
 def assert_not_account_root(ftp: FTP) -> None:
     current_names = names(ftp)
     current_dir = ftp.pwd().strip().rstrip("/") or "/"
-
-    if ASSUME_LOGIN_IS_WEBROOT:
-        blocked_markers = {"mail", "logs", "ssl", "tmp", "etc", "backups", "private_html"}
-        if blocked_markers.intersection(current_names):
-            raise SystemExit(
-                "Segurança: o FTP parece estar na raiz da conta, não na public_html do site. "
-                "Ajuste FTP_TARGET_DIR antes de apagar a pasta public_html."
-            )
-        return
 
     if current_dir.endswith(f"/{PUBLIC_HTML}") or current_dir == PUBLIC_HTML:
         return
@@ -225,7 +235,7 @@ def main() -> None:
         ftp.set_pasv(True)
 
         print_listing(ftp, "Conteúdo inicial do FTP")
-        target = choose_target_dir(ftp)
+        target = resolve_target_dir(ftp, choose_target_dir(ftp))
         print(f"Raiz FTP inicial: {ftp.pwd()}")
         print(f"Diretório remoto escolhido: {target}")
         ensure_cwd(ftp, target)

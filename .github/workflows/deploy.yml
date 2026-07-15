@@ -44,7 +44,6 @@ jobs:
           FTP_USER: ${{ secrets.FTP_USER }}
           FTP_PASS: ${{ secrets.FTP_PASS }}
           FTP_LOCAL_DIR: hostinger-dist
-          FTP_TARGET_DIR: "."
-          FTP_ASSUME_LOGIN_IS_WEBROOT: "true"
+          FTP_TARGET_DIR: "public_html"
           REMOVE_NESTED_PUBLIC_HTML: "true"
         run: python scripts/hostinger_ftp_deploy.py
