@@ -1,49 +1,40 @@
-name: Deploy Hostinger
+name: Deploy Lovable via FTP na Hostinger
 
 on:
   push:
     branches:
       - main
-  workflow_dispatch:
 
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
     steps:
-      - name: Clonar repositório
-        uses: actions/checkout@v4
+      - name: Clonar o repositório
+        uses: actions/checkout@v3
 
-      - name: Configurar Node.js 22
-        uses: actions/setup-node@v4
+      - name: Configurar Node.js 18
+        uses: actions/setup-node@v3
         with:
-          node-version: '22'
+          node-version: '18'
 
-      - name: Configurar Bun
-        uses: oven-sh/setup-bun@v2
-        with:
-          bun-version: latest
-
-      - name: Instalar dependências com Bun
-        run: bun install
+      - name: Instalar dependências
+        run: npm install
 
       - name: Build do projeto
-        run: bun run build
+        run: npm run build
 
-      - name: Preparar arquivos estáticos para Hostinger
-        run: node scripts/prepare-hostinger-static.mjs
+      - name: Mostrar arquivos gerados
+        run: ls -la dist/
 
-      - name: Validar pacote de publicação
-        run: |
-          test -f hostinger-dist/index.html
-          test -d hostinger-dist/assets
-          ls -la hostinger-dist
-
-      - name: Publicar na public_html correta e remover duplicada
-        env:
-          FTP_HOST: ${{ secrets.FTP_HOST }}
-          FTP_USER: ${{ secrets.FTP_USER }}
-          FTP_PASS: ${{ secrets.FTP_PASS }}
-          FTP_LOCAL_DIR: hostinger-dist
-          FTP_TARGET_DIR: "public_html"
-          REMOVE_NESTED_PUBLIC_HTML: "true"
-        run: python scripts/hostinger_ftp_deploy.py
+      - name: Deploy FTP para Hostinger
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.4
+        with:
+          server: ${{ secrets.FTP_HOST }}
+          port: 21
+          username: ${{ secrets.FTP_USER }}
+          password: ${{ secrets.FTP_PASS }}
+          local-dir: ./dist/
+          server-dir: /
+          dangerous-clean-slate: true
+          dry-run: false
+          log-level: verbose
