@@ -67,7 +67,8 @@ export function SiteFooter() {
           <span>Feito com tradição e fogo alto</span>
         </div>
       </div>
-    </footer>
+      </footer>
+    </>
   );
 }
 
