@@ -1,39 +1,13 @@
 import { Link } from "@tanstack/react-router";
-import { recipes } from "@/lib/recipes";
 import { BrandLogo } from "./BrandLogo";
+import { TrendingArticles } from "./TrendingArticles";
 
 export function SiteFooter() {
-  const trending = recipes.slice(0, 4);
   return (
-    <footer className="bg-[oklch(0.18_0.02_25)] text-neutral-300">
-      {/* Trending strip */}
-      <div className="border-b border-white/10">
-        <div className="mx-auto max-w-7xl px-4 py-6">
-          <p className="mb-4 text-xs font-bold uppercase tracking-[0.25em] text-neutral-400">
-            Em alta agora
-          </p>
-          <div className="grid gap-4 md:grid-cols-4">
-            {trending.map((r) => (
-              <Link
-                to="/receitas/$slug"
-                params={{ slug: r.slug }}
-                key={r.slug}
-                className="flex items-center gap-3 transition hover:text-primary"
-              >
-                <img
-                  src={r.image}
-                  alt={r.title}
-                  loading="lazy"
-                  className="h-12 w-12 shrink-0 rounded-full object-cover"
-                />
-                <span className="text-sm font-semibold leading-snug text-neutral-100">
-                  {r.title.split(" ").slice(0, 5).join(" ")}
-                </span>
-              </Link>
-            ))}
-          </div>
-        </div>
-      </div>
+    <>
+      <TrendingArticles />
+      <footer className="bg-[oklch(0.18_0.02_25)] text-neutral-300">
+
 
       <div className="mx-auto grid max-w-7xl gap-10 px-4 py-14 md:grid-cols-4">
         <div>
