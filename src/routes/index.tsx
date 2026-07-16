@@ -1,5 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { SiteHeader } from "@/components/SiteHeader";
+import { CategoryCircles } from "@/components/CategoryCircles";
 import { SiteFooter } from "@/components/SiteFooter";
 import { PageBannerSketches } from "@/components/SketchMotifs";
 import { RecipeCard } from "@/components/RecipeCard";
@@ -42,6 +43,7 @@ function Home() {
   return (
     <div className="min-h-screen bg-background">
       <SiteHeader />
+      <CategoryCircles />
 
       {/* HERO */}
       <section className="relative isolate overflow-hidden bg-cream">
