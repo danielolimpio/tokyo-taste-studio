@@ -1,12 +1,12 @@
-import sushi from "@/assets/recipe-sushi.jpg";
-import ramen from "@/assets/recipe-ramen.jpg";
-import tempura from "@/assets/recipe-tempura.jpg";
-import katsu from "@/assets/recipe-katsu.jpg";
-import miso from "@/assets/recipe-miso.jpg";
-import yakitori from "@/assets/recipe-yakitori.jpg";
-import chirashi from "@/assets/recipe-chirashi.jpg";
-import takoyaki from "@/assets/recipe-takoyaki.jpg";
-import mochi from "@/assets/recipe-mochi.jpg";
+import sushi from "@/assets/recipe-sushi.webp";
+import ramen from "@/assets/recipe-ramen.webp";
+import tempura from "@/assets/recipe-tempura.webp";
+import katsu from "@/assets/recipe-katsu.webp";
+import miso from "@/assets/recipe-miso.webp";
+import yakitori from "@/assets/recipe-yakitori.webp";
+import chirashi from "@/assets/recipe-chirashi.webp";
+import takoyaki from "@/assets/recipe-takoyaki.webp";
+import mochi from "@/assets/recipe-mochi.webp";
 
 export type Recipe = {
   slug: string;

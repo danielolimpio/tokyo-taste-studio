@@ -6,13 +6,13 @@ import { PageBannerSketches } from "@/components/SketchMotifs";
 import { RecipeCard } from "@/components/RecipeCard";
 import { recipes } from "@/lib/recipes";
 import { Clock, User, Apple, Beef, Cookie, Soup } from "lucide-react";
-import hero from "@/assets/hero-pancakes.jpg";
-import appPromo from "@/assets/app-promo.jpg";
-import chefAkira from "@/assets/chef-akira.jpg";
-import chefMei from "@/assets/chef-mei.jpg";
-import chefYuki from "@/assets/chef-yuki.jpg";
-import chefHaruka from "@/assets/chef-haruka.jpg";
-import chefRen from "@/assets/chef-ren.jpg";
+import hero from "@/assets/hero-pancakes.webp";
+import appPromo from "@/assets/app-promo.webp";
+import chefAkira from "@/assets/chef-akira.webp";
+import chefMei from "@/assets/chef-mei.webp";
+import chefYuki from "@/assets/chef-yuki.webp";
+import chefHaruka from "@/assets/chef-haruka.webp";
+import chefRen from "@/assets/chef-ren.webp";
 
 export const Route = createFileRoute("/")({
   head: () => ({

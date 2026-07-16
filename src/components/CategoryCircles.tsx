@@ -1,9 +1,9 @@
 import { Link } from "@tanstack/react-router";
-import sushiImg from "@/assets/recipe-sushi.jpg";
-import ramenImg from "@/assets/recipe-ramen.jpg";
-import misoImg from "@/assets/recipe-miso.jpg";
-import mochiImg from "@/assets/recipe-mochi.jpg";
-import molhosImg from "@/assets/cat-molhos.jpg";
+import sushiImg from "@/assets/recipe-sushi.webp";
+import ramenImg from "@/assets/recipe-ramen.webp";
+import misoImg from "@/assets/recipe-miso.webp";
+import mochiImg from "@/assets/recipe-mochi.webp";
+import molhosImg from "@/assets/cat-molhos.webp";
 
 const items = [
   { label: "Sushis", slug: "sushis-e-sashimis", img: sushiImg },
