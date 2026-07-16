@@ -9,9 +9,11 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as TermosECondicoesRouteImport } from './routes/termos-e-condicoes'
 import { Route as SobreRouteImport } from './routes/sobre'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as ReceitasRouteImport } from './routes/receitas'
+import { Route as PoliticaDePrivacidadeRouteImport } from './routes/politica-de-privacidade'
 import { Route as ContatoRouteImport } from './routes/contato'
 import { Route as CategoriasRouteImport } from './routes/categorias'
 import { Route as IndexRouteImport } from './routes/index'
@@ -20,6 +22,11 @@ import { Route as ReceitasNomesETiposRouteImport } from './routes/receitas.nomes
 import { Route as ReceitasSlugRouteImport } from './routes/receitas.$slug'
 import { Route as CategoriasSlugRouteImport } from './routes/categorias.$slug'
 
+const TermosECondicoesRoute = TermosECondicoesRouteImport.update({
+  id: '/termos-e-condicoes',
+  path: '/termos-e-condicoes',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const SobreRoute = SobreRouteImport.update({
   id: '/sobre',
   path: '/sobre',
@@ -33,6 +40,11 @@ const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
 const ReceitasRoute = ReceitasRouteImport.update({
   id: '/receitas',
   path: '/receitas',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PoliticaDePrivacidadeRoute = PoliticaDePrivacidadeRouteImport.update({
+  id: '/politica-de-privacidade',
+  path: '/politica-de-privacidade',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ContatoRoute = ContatoRouteImport.update({
@@ -75,9 +87,11 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/categorias': typeof CategoriasRouteWithChildren
   '/contato': typeof ContatoRoute
+  '/politica-de-privacidade': typeof PoliticaDePrivacidadeRoute
   '/receitas': typeof ReceitasRouteWithChildren
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/sobre': typeof SobreRoute
+  '/termos-e-condicoes': typeof TermosECondicoesRoute
   '/categorias/$slug': typeof CategoriasSlugRoute
   '/receitas/$slug': typeof ReceitasSlugRoute
   '/receitas/nomes-e-tipos': typeof ReceitasNomesETiposRoute
@@ -86,9 +100,11 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/contato': typeof ContatoRoute
+  '/politica-de-privacidade': typeof PoliticaDePrivacidadeRoute
   '/receitas': typeof ReceitasRouteWithChildren
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/sobre': typeof SobreRoute
+  '/termos-e-condicoes': typeof TermosECondicoesRoute
   '/categorias/$slug': typeof CategoriasSlugRoute
   '/receitas/$slug': typeof ReceitasSlugRoute
   '/receitas/nomes-e-tipos': typeof ReceitasNomesETiposRoute
@@ -99,9 +115,11 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/categorias': typeof CategoriasRouteWithChildren
   '/contato': typeof ContatoRoute
+  '/politica-de-privacidade': typeof PoliticaDePrivacidadeRoute
   '/receitas': typeof ReceitasRouteWithChildren
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/sobre': typeof SobreRoute
+  '/termos-e-condicoes': typeof TermosECondicoesRoute
   '/categorias/$slug': typeof CategoriasSlugRoute
   '/receitas/$slug': typeof ReceitasSlugRoute
   '/receitas/nomes-e-tipos': typeof ReceitasNomesETiposRoute
@@ -113,9 +131,11 @@ export interface FileRouteTypes {
     | '/'
     | '/categorias'
     | '/contato'
+    | '/politica-de-privacidade'
     | '/receitas'
     | '/sitemap.xml'
     | '/sobre'
+    | '/termos-e-condicoes'
     | '/categorias/$slug'
     | '/receitas/$slug'
     | '/receitas/nomes-e-tipos'
@@ -124,9 +144,11 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/contato'
+    | '/politica-de-privacidade'
     | '/receitas'
     | '/sitemap.xml'
     | '/sobre'
+    | '/termos-e-condicoes'
     | '/categorias/$slug'
     | '/receitas/$slug'
     | '/receitas/nomes-e-tipos'
@@ -136,9 +158,11 @@ export interface FileRouteTypes {
     | '/'
     | '/categorias'
     | '/contato'
+    | '/politica-de-privacidade'
     | '/receitas'
     | '/sitemap.xml'
     | '/sobre'
+    | '/termos-e-condicoes'
     | '/categorias/$slug'
     | '/receitas/$slug'
     | '/receitas/nomes-e-tipos'
@@ -149,13 +173,22 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   CategoriasRoute: typeof CategoriasRouteWithChildren
   ContatoRoute: typeof ContatoRoute
+  PoliticaDePrivacidadeRoute: typeof PoliticaDePrivacidadeRoute
   ReceitasRoute: typeof ReceitasRouteWithChildren
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   SobreRoute: typeof SobreRoute
+  TermosECondicoesRoute: typeof TermosECondicoesRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/termos-e-condicoes': {
+      id: '/termos-e-condicoes'
+      path: '/termos-e-condicoes'
+      fullPath: '/termos-e-condicoes'
+      preLoaderRoute: typeof TermosECondicoesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/sobre': {
       id: '/sobre'
       path: '/sobre'
@@ -175,6 +208,13 @@ declare module '@tanstack/react-router' {
       path: '/receitas'
       fullPath: '/receitas'
       preLoaderRoute: typeof ReceitasRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/politica-de-privacidade': {
+      id: '/politica-de-privacidade'
+      path: '/politica-de-privacidade'
+      fullPath: '/politica-de-privacidade'
+      preLoaderRoute: typeof PoliticaDePrivacidadeRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/contato': {
@@ -261,9 +301,11 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   CategoriasRoute: CategoriasRouteWithChildren,
   ContatoRoute: ContatoRoute,
+  PoliticaDePrivacidadeRoute: PoliticaDePrivacidadeRoute,
   ReceitasRoute: ReceitasRouteWithChildren,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
   SobreRoute: SobreRoute,
+  TermosECondicoesRoute: TermosECondicoesRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
