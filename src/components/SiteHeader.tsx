@@ -6,7 +6,6 @@ import { BrandLogo } from "./BrandLogo";
 const NAV = [
   { to: "/", label: "Home" },
   { to: "/receitas", label: "Receitas" },
-  { to: "/categorias", label: "Categorias" },
   { to: "/sobre", label: "Sobre" },
   { to: "/contato", label: "Contato" },
 ] as const;
