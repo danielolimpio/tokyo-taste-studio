@@ -69,7 +69,7 @@ export const Route = createFileRoute("/categorias/$slug")({
 });
 
 function CategoryPage() {
-  const { category, recipes } = Route.useLoaderData();
+  const { category, recipes } = Route.useLoaderData() as ReturnType<typeof recipesLoader>;
 
   return (
     <div className="min-h-screen bg-background">

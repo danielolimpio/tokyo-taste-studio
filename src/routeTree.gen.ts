@@ -13,9 +13,12 @@ import { Route as SobreRouteImport } from './routes/sobre'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as ReceitasRouteImport } from './routes/receitas'
 import { Route as ContatoRouteImport } from './routes/contato'
+import { Route as CategoriasRouteImport } from './routes/categorias'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as CategoriasIndexRouteImport } from './routes/categorias.index'
 import { Route as ReceitasNomesETiposRouteImport } from './routes/receitas.nomes-e-tipos'
 import { Route as ReceitasSlugRouteImport } from './routes/receitas.$slug'
+import { Route as CategoriasSlugRouteImport } from './routes/categorias.$slug'
 
 const SobreRoute = SobreRouteImport.update({
   id: '/sobre',
@@ -37,10 +40,20 @@ const ContatoRoute = ContatoRouteImport.update({
   path: '/contato',
   getParentRoute: () => rootRouteImport,
 } as any)
+const CategoriasRoute = CategoriasRouteImport.update({
+  id: '/categorias',
+  path: '/categorias',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
+} as any)
+const CategoriasIndexRoute = CategoriasIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => CategoriasRoute,
 } as any)
 const ReceitasNomesETiposRoute = ReceitasNomesETiposRouteImport.update({
   id: '/nomes-e-tipos',
@@ -52,15 +65,23 @@ const ReceitasSlugRoute = ReceitasSlugRouteImport.update({
   path: '/$slug',
   getParentRoute: () => ReceitasRoute,
 } as any)
+const CategoriasSlugRoute = CategoriasSlugRouteImport.update({
+  id: '/$slug',
+  path: '/$slug',
+  getParentRoute: () => CategoriasRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/categorias': typeof CategoriasRouteWithChildren
   '/contato': typeof ContatoRoute
   '/receitas': typeof ReceitasRouteWithChildren
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/sobre': typeof SobreRoute
+  '/categorias/$slug': typeof CategoriasSlugRoute
   '/receitas/$slug': typeof ReceitasSlugRoute
   '/receitas/nomes-e-tipos': typeof ReceitasNomesETiposRoute
+  '/categorias/': typeof CategoriasIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -68,29 +89,37 @@ export interface FileRoutesByTo {
   '/receitas': typeof ReceitasRouteWithChildren
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/sobre': typeof SobreRoute
+  '/categorias/$slug': typeof CategoriasSlugRoute
   '/receitas/$slug': typeof ReceitasSlugRoute
   '/receitas/nomes-e-tipos': typeof ReceitasNomesETiposRoute
+  '/categorias': typeof CategoriasIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/categorias': typeof CategoriasRouteWithChildren
   '/contato': typeof ContatoRoute
   '/receitas': typeof ReceitasRouteWithChildren
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/sobre': typeof SobreRoute
+  '/categorias/$slug': typeof CategoriasSlugRoute
   '/receitas/$slug': typeof ReceitasSlugRoute
   '/receitas/nomes-e-tipos': typeof ReceitasNomesETiposRoute
+  '/categorias/': typeof CategoriasIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/categorias'
     | '/contato'
     | '/receitas'
     | '/sitemap.xml'
     | '/sobre'
+    | '/categorias/$slug'
     | '/receitas/$slug'
     | '/receitas/nomes-e-tipos'
+    | '/categorias/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -98,21 +127,27 @@ export interface FileRouteTypes {
     | '/receitas'
     | '/sitemap.xml'
     | '/sobre'
+    | '/categorias/$slug'
     | '/receitas/$slug'
     | '/receitas/nomes-e-tipos'
+    | '/categorias'
   id:
     | '__root__'
     | '/'
+    | '/categorias'
     | '/contato'
     | '/receitas'
     | '/sitemap.xml'
     | '/sobre'
+    | '/categorias/$slug'
     | '/receitas/$slug'
     | '/receitas/nomes-e-tipos'
+    | '/categorias/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  CategoriasRoute: typeof CategoriasRouteWithChildren
   ContatoRoute: typeof ContatoRoute
   ReceitasRoute: typeof ReceitasRouteWithChildren
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
@@ -149,12 +184,26 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ContatoRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/categorias': {
+      id: '/categorias'
+      path: '/categorias'
+      fullPath: '/categorias'
+      preLoaderRoute: typeof CategoriasRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
+    }
+    '/categorias/': {
+      id: '/categorias/'
+      path: '/'
+      fullPath: '/categorias/'
+      preLoaderRoute: typeof CategoriasIndexRouteImport
+      parentRoute: typeof CategoriasRoute
     }
     '/receitas/nomes-e-tipos': {
       id: '/receitas/nomes-e-tipos'
@@ -170,8 +219,29 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ReceitasSlugRouteImport
       parentRoute: typeof ReceitasRoute
     }
+    '/categorias/$slug': {
+      id: '/categorias/$slug'
+      path: '/$slug'
+      fullPath: '/categorias/$slug'
+      preLoaderRoute: typeof CategoriasSlugRouteImport
+      parentRoute: typeof CategoriasRoute
+    }
   }
 }
+
+interface CategoriasRouteChildren {
+  CategoriasSlugRoute: typeof CategoriasSlugRoute
+  CategoriasIndexRoute: typeof CategoriasIndexRoute
+}
+
+const CategoriasRouteChildren: CategoriasRouteChildren = {
+  CategoriasSlugRoute: CategoriasSlugRoute,
+  CategoriasIndexRoute: CategoriasIndexRoute,
+}
+
+const CategoriasRouteWithChildren = CategoriasRoute._addFileChildren(
+  CategoriasRouteChildren,
+)
 
 interface ReceitasRouteChildren {
   ReceitasSlugRoute: typeof ReceitasSlugRoute
@@ -189,6 +259,7 @@ const ReceitasRouteWithChildren = ReceitasRoute._addFileChildren(
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  CategoriasRoute: CategoriasRouteWithChildren,
   ContatoRoute: ContatoRoute,
   ReceitasRoute: ReceitasRouteWithChildren,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
