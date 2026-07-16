@@ -4,14 +4,14 @@ import { SiteFooter } from "@/components/SiteFooter";
 import { PageBanner } from "@/components/PageBanner";
 import { PageBannerSketches } from "@/components/SketchMotifs";
 import { Play } from "lucide-react";
-import chef from "@/assets/chef-hero.jpg";
-import chefAkira from "@/assets/chef-akira.jpg";
-import chefMei from "@/assets/chef-mei.jpg";
-import chefYuki from "@/assets/chef-yuki.jpg";
-import chefHaruka from "@/assets/chef-haruka.jpg";
-import chefRen from "@/assets/chef-ren.jpg";
-import video from "@/assets/video-poster.jpg";
-import grandma from "@/assets/grandma-recipes.jpg";
+import chef from "@/assets/chef-hero.webp";
+import chefAkira from "@/assets/chef-akira.webp";
+import chefMei from "@/assets/chef-mei.webp";
+import chefYuki from "@/assets/chef-yuki.webp";
+import chefHaruka from "@/assets/chef-haruka.webp";
+import chefRen from "@/assets/chef-ren.webp";
+import video from "@/assets/video-poster.webp";
+import grandma from "@/assets/grandma-recipes.webp";
 
 export const Route = createFileRoute("/sobre")({
   head: () => ({
