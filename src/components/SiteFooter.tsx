@@ -44,11 +44,11 @@ export function SiteFooter() {
           </p>
         </div>
         <FooterCol title="Links Úteis" items={[
-          ["Introdução", "/sobre"],
           ["Sobre nós", "/sobre"],
           ["Receitas", "/receitas"],
-          ["Política de Privacidade", "/sobre"],
-          ["Termos e Condições", "/sobre"],
+          ["Categorias", "/categorias"],
+          ["Política de Privacidade", "/politica-de-privacidade"],
+          ["Termos e Condições", "/termos-e-condicoes"],
         ]} />
         <div>
           <h4 className="mb-4 text-sm font-bold text-white">Contato</h4>
