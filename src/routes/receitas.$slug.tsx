@@ -102,7 +102,7 @@ function RecipePage() {
 
         {/* Hero image with print button */}
         <div className="relative mt-10 overflow-hidden rounded-xl">
-          <img src={r.image} alt={r.title} className="w-full object-cover" />
+          <img src={r.image} alt={r.title} width={1200} height={800} fetchPriority="high" decoding="async" className="w-full object-cover" />
           <button className="absolute bottom-4 right-4 inline-flex items-center gap-2 rounded-md bg-ink/85 px-3 py-1.5 text-xs font-semibold text-white backdrop-blur transition hover:bg-ink">
             <Printer className="h-3.5 w-3.5" /> Imprimir
           </button>
