@@ -4,6 +4,8 @@ import { SiteFooter } from "@/components/SiteFooter";
 import { PageBanner } from "@/components/PageBanner";
 import { RecipeCard } from "@/components/RecipeCard";
 import { categories, findCategory, recipesForCategory } from "@/lib/categories";
+import type { Recipe } from "@/lib/recipes";
+import type { Category } from "@/lib/categories";
 
 export const Route = createFileRoute("/categorias/$slug")({
   loader: ({ params }) => {
@@ -69,7 +71,7 @@ export const Route = createFileRoute("/categorias/$slug")({
 });
 
 function CategoryPage() {
-  const { category, recipes } = Route.useLoaderData() as ReturnType<typeof recipesLoader>;
+  const { category, recipes } = Route.useLoaderData() as { category: Category; recipes: Recipe[] };
 
   return (
     <div className="min-h-screen bg-background">
