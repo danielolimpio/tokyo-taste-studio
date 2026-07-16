@@ -24,7 +24,10 @@ export const Route = createFileRoute("/")({
       { property: "og:description", content: "Sushi, ramen, temaki, yakisoba e dezenas de receitas de comida japonesa passo a passo." },
       { property: "og:url", content: "/" },
     ],
-    links: [{ rel: "canonical", href: "/" }],
+    links: [
+      { rel: "canonical", href: "/" },
+      { rel: "preload", as: "image", href: hero, fetchpriority: "high" },
+    ],
   }),
 
 
@@ -91,7 +94,7 @@ function Home() {
           </div>
           <div className="relative">
             <div className="overflow-hidden rounded-2xl shadow-2xl">
-              <img src={hero} alt="Pancakes japoneses" width={896} height={1024} className="h-full w-full object-cover" />
+              <img src={hero} alt="Pancakes japoneses" width={896} height={1024} fetchPriority="high" decoding="async" className="h-full w-full object-cover" />
             </div>
           </div>
         </div>
