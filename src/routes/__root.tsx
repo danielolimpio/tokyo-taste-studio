@@ -82,6 +82,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { property: "og:site_name", content: "ComidasJaponesas" },
       { property: "og:locale", content: "pt_BR" },
       { name: "twitter:card", content: "summary_large_image" },
+      { name: "google-site-verification", content: "GyJPhuKK-zL-3DERlzdOX71MIFrAX8DR0c03cIqc9jo" },
     ],
 
     links: [
