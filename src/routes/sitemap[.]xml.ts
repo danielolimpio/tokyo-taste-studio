@@ -1,9 +1,9 @@
 import { createFileRoute } from "@tanstack/react-router";
 import type {} from "@tanstack/react-start";
 import { recipes } from "@/lib/recipes";
+import { categories } from "@/lib/categories";
 
-// TODO: replace with your project URL once a project name or custom domain is set.
-const BASE_URL = "";
+const BASE_URL = "https://comidasjaponesas.com";
 
 interface SitemapEntry {
   path: string;
@@ -16,13 +16,20 @@ export const Route = createFileRoute("/sitemap.xml")({
   server: {
     handlers: {
       GET: async () => {
+        const today = new Date().toISOString().slice(0, 10);
         const entries: SitemapEntry[] = [
-          { path: "/", changefreq: "weekly", priority: "1.0" },
-          { path: "/receitas", changefreq: "weekly", priority: "0.9" },
+          { path: "/", changefreq: "weekly", priority: "1.0", lastmod: today },
+          { path: "/receitas", changefreq: "weekly", priority: "0.9", lastmod: today },
           { path: "/receitas/nomes-e-tipos", changefreq: "monthly", priority: "0.8" },
-
+          { path: "/categorias", changefreq: "weekly", priority: "0.9", lastmod: today },
           { path: "/sobre", changefreq: "monthly", priority: "0.6" },
           { path: "/contato", changefreq: "monthly", priority: "0.5" },
+          ...categories.map((c) => ({
+            path: `/categorias/${c.slug}`,
+            changefreq: "weekly" as const,
+            priority: "0.85",
+            lastmod: today,
+          })),
           ...recipes.map((r) => ({
             path: `/receitas/${r.slug}`,
             changefreq: "monthly" as const,

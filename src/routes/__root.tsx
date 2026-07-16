@@ -82,14 +82,6 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { property: "og:site_name", content: "ComidasJaponesas" },
       { property: "og:locale", content: "pt_BR" },
       { name: "twitter:card", content: "summary_large_image" },
-      { title: "Lovable App" },
-      { property: "og:title", content: "Lovable App" },
-      { name: "twitter:title", content: "Lovable App" },
-      { name: "description", content: "Tokyo Taste Studio is a Japanese cuisine blog with a visually rich design." },
-      { property: "og:description", content: "Tokyo Taste Studio is a Japanese cuisine blog with a visually rich design." },
-      { name: "twitter:description", content: "Tokyo Taste Studio is a Japanese cuisine blog with a visually rich design." },
-      { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/8e99ef86-bfeb-4250-a158-75f3378357de/id-preview-5e13ba54--4e894e5e-3e43-44f2-8c51-736992767fa8.lovable.app-1782739099213.png" },
-      { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/8e99ef86-bfeb-4250-a158-75f3378357de/id-preview-5e13ba54--4e894e5e-3e43-44f2-8c51-736992767fa8.lovable.app-1782739099213.png" },
     ],
 
     links: [

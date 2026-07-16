@@ -1,1 +1,0 @@
-const s="/assets/chef-akira-BXo5jNA0.jpg",e="/assets/chef-mei-BKuP4EY6.jpg",a="/assets/chef-yuki-DA63HiRg.jpg",c="/assets/chef-haruka-DnjHjVkC.jpg",h="/assets/chef-ren-PKp7mKze.jpg";export{e as a,a as b,s as c,c as d,h as e};
