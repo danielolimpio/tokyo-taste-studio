@@ -1,16 +1,16 @@
 import { Link } from "@tanstack/react-router";
-import sushiImg from "@/assets/recipe-sushi.webp";
-import ramenImg from "@/assets/recipe-ramen.webp";
-import misoImg from "@/assets/recipe-miso.webp";
-import mochiImg from "@/assets/recipe-mochi.webp";
-import molhosImg from "@/assets/cat-molhos.webp";
+import sushisAsset from "@/assets/cat-sushis.jpg.asset.json";
+import quentesAsset from "@/assets/cat-quentes.jpg.asset.json";
+import entradasAsset from "@/assets/cat-entradas.jpg.asset.json";
+import sobremesasAsset from "@/assets/cat-sobremesas.jpg.asset.json";
+import molhosAsset from "@/assets/cat-molhos.jpg.asset.json";
 
 const items = [
-  { label: "Sushis", slug: "sushis-e-sashimis", img: sushiImg },
-  { label: "Quentes", slug: "pratos-quentes", img: ramenImg },
-  { label: "Entradas", slug: "acompanhamentos-e-entradas", img: misoImg },
-  { label: "Sobremesas", slug: "sobremesas-japonesas", img: mochiImg },
-  { label: "Molhos", slug: "bebidas-e-molhos-japoneses", img: molhosImg },
+  { label: "Sushis", slug: "sushis-e-sashimis", img: sushisAsset.url },
+  { label: "Quentes", slug: "pratos-quentes", img: quentesAsset.url },
+  { label: "Entradas", slug: "acompanhamentos-e-entradas", img: entradasAsset.url },
+  { label: "Sobremesas", slug: "sobremesas-japonesas", img: sobremesasAsset.url },
+  { label: "Molhos", slug: "bebidas-e-molhos-japoneses", img: molhosAsset.url },
 ];
 
 export function CategoryCircles() {
@@ -26,14 +26,14 @@ export function CategoryCircles() {
                 className="group flex flex-col items-center gap-3 text-center"
               >
                 <span className="relative block rounded-full p-[3px] ring-2 ring-primary transition group-hover:ring-primary/70">
-                  <span className="block overflow-hidden rounded-full border-2 border-background">
+                  <span className="block h-20 w-20 overflow-hidden rounded-full sm:h-24 sm:w-24 md:h-28 md:w-28">
                     <img
                       src={it.img}
                       alt={it.label}
-                      width={160}
-                      height={160}
+                      width={224}
+                      height={224}
                       loading="lazy"
-                      className="h-20 w-20 object-cover transition duration-500 group-hover:scale-105 sm:h-24 sm:w-24 md:h-28 md:w-28"
+                      className="block h-full w-full object-cover object-center transition duration-500 group-hover:scale-105"
                     />
                   </span>
                 </span>
